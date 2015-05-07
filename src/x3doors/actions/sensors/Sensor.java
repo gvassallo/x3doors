@@ -1,8 +1,8 @@
 package x3doors.actions.sensors;
 
 import util.Printable;
-import util.X3DExportable;
-import x3doors.X3DExporter;
+import x3doors.exporters.*;
+import util.*;
 
 public abstract class Sensor implements Printable, X3DExportable {
 	/** The script exporting mode, editable by the {@link X3DExporter} static method setEmbeddedScripts(boolean embeddedScripts).

@@ -9,14 +9,16 @@ import java.util.Set;
 
 
 
+
 import math.Matrix4;
 import math.Vec3;
 import math.Vec4;
 import util.Printable;
 import util.X3DExportable;
+import util.X3DomExportable;
 
 
-public abstract class SceneObject implements Printable, X3DExportable {
+public abstract class SceneObject implements Printable, X3DExportable, X3DomExportable {
     /* A map which retrieves a scene object given its handle */
     private static HashMap<Integer, SceneObject> register = new HashMap<Integer, SceneObject>();
     /** The scene object handle. */

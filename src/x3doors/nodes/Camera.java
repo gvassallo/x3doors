@@ -3,6 +3,8 @@ package x3doors.nodes;
 import math.Vec3;
 import math.Vec4;
 
+import org.w3c.dom.Element;
+
 public class Camera extends SceneObject {
 	private static final double AVATAR_HEIGHT = 1.6;
 	/** Defines the scene explore mode types, can assume the following values<p>
@@ -147,6 +149,12 @@ public class Camera extends SceneObject {
 
 	public static double getAvatarHeight() {
 		return AVATAR_HEIGHT;
+	}
+
+	@Override
+	public Element toX3Dom() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
 

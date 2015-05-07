@@ -1,8 +1,12 @@
 package x3doors.nodes; 
 
-import util.RGBColor;
 import math.Vec3;
 import math.Vec4;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import x3doors.*; 
+import util.RGBColor;
 
 public class Mesh extends SceneObject {
 	/* The mesh type */
@@ -167,8 +171,37 @@ public class Mesh extends SceneObject {
 		X3DString +=			"				<IndexedFaceSet DEF=\"IndexedFaceSet_" + name + "\" colorPerVertex=\"false\" solid=\"" + backFaceCulling + "\" coordIndex=\"" + coordIndex + "\">\n" +
 													geometryX3DString +
 								"				</IndexedFaceSet>\n" +
-								"			</Shape>\n";
+							"			</Shape>\n";
 								// "		</Switch>\n";
 		return X3DString;
 	}
+
+    public Element toX3Dom()  {
+       Document doc = DocInstance.getInstance();  
+       /* define the transform  */
+       String meshType = new String();  
+       switch (this.type){
+           case BOX : 
+               meshType = "Box"; 
+               break ; 
+           case SPHERE : 
+               meshType = "Sphere"; 
+               break ; 
+           case RECTANGLE : 
+               meshType = "Rectangle";
+               break ; 
+           case IMPORTED  :
+               break ;
+       }
+
+       Element mesh = doc.createElement(meshType); 
+       mesh.setAttribute("DEF", this.name); 
+       Element appearance = doc.createElement("Appearance");  
+       Element material = this.material.toX3Dom() ;
+       material.setAttribute("DEF", this.name+"_Material"); 
+       appearance.appendChild(material); 
+       mesh.appendChild(appearance); 
+       return mesh; 
+    }
+    
 }

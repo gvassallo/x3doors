@@ -1,11 +1,16 @@
 package x3doors.nodes; 
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
 import util.Printable;
 import util.RGBColor;
 import util.Utils;
 import util.X3DExportable;
+import util.X3DomExportable;
+import x3doors.DocInstance;
 
-public class Material implements Printable, X3DExportable {
+public class Material implements Printable, X3DExportable, X3DomExportable {
     /* The transparency of this material. When alpha equals 1.0 the scene object is opaque,
      * when 0.0 it is fully transparent (transparency = 1 - alpha) */
     // 3Doors range: [0.0, 1.0]
@@ -67,6 +72,19 @@ public class Material implements Printable, X3DExportable {
         String X3DString = " transparency=\"" + Utils.double2StringFormat(1 - alpha) + "\" ambientIntensity=\"" + Utils.double2StringFormat(ambientIntensity) + "\" shininess=\"" + Utils.double2StringFormat(shininess) + "\" diffuseColor=\"" + diffuse.toX3D() + "\" specularColor=\"" + specular.toX3D() + "\" emissiveColor=\"" + emissive.toX3D() + "\"/>\n";
         return X3DString;
     }
-
+    public Element toX3Dom()  {
+   
+    	 Document doc = DocInstance.getInstance();           
+        Element  material = doc.createElement("Material"); 
+        double ambientIntensity = ambient.r == ambient.g && ambient.g == ambient.b ? Utils.normalizeDouble(ambient.r, 255.0) : 0.2;
+        material.setAttribute("transparency", Utils.double2StringFormat(1 - alpha) );
+        material.setAttribute("ambientIntensity",Utils.double2StringFormat(ambientIntensity));
+        material.setAttribute("shininess", Utils.double2StringFormat(shininess));
+        material.setAttribute("diffuseColor", diffuse.toX3D()); 
+        material.setAttribute("specularColor", specular.toX3D()); 
+        material.setAttribute("emissiveColor", emissive.toX3D()); 
+        return material; 
+       }
 }
+    
 

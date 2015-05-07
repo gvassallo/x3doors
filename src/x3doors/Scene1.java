@@ -6,6 +6,7 @@ import x3doors.actions.Behaviour;
 import x3doors.actions.controllers.Controller;
 import x3doors.actions.controllers.Pose;
 import x3doors.actions.sensors.Delay;
+import x3doors.exporters.X3DExporter;
 import x3doors.nodes.Camera;
 import x3doors.nodes.Light;
 import x3doors.nodes.Mesh;

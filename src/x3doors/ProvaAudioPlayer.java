@@ -1,17 +1,15 @@
 package x3doors;
 
 import java.util.ArrayList;
-import x3doors.nodes.*;
 
-
-import math.Matrix4;
 import math.Vec3;
 import math.Vec4;
-import util.RGBColor;
-import x3doors.*;
-import x3doors.properties.*;
+import x3doors.actions.Behaviour;
+import x3doors.actions.sensors.Delay;
+import x3doors.nodes.Camera;
+import x3doors.nodes.Mesh;
+import x3doors.properties.SceneProperties;
 
-@SuppressWarnings("unused")
 public class ProvaAudioPlayer {
 	public static void main (String[] args) throws Exception {
 		SceneProperties.setTitle("ProvaAudioPlayer2");

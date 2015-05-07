@@ -1,4 +1,4 @@
-package x3doors;
+package x3doors.exporters;
 
 import java.io.File;
 import java.io.IOException;
@@ -10,6 +10,7 @@ import java.util.HashMap;
 import util.Actionable;
 import util.Utils;
 import util.XMLFormatter;
+import x3doors.Data;
 import x3doors.actions.Behaviour;
 import x3doors.actions.sensors.AND;
 import x3doors.actions.sensors.Click;
@@ -165,16 +166,16 @@ public class X3DExporter {
 	private static void checkData(Data data) throws IOException {
 		switch (data.getType()) {
 			case "AudioPlayer":
-				String content = ((AudioPlayer) data).getContent();
-				File contentFile = new File(content);
+				//String content = ((AudioPlayer) data).getContent();
+		//		File contentFile = new File(content);
 				String title = SceneProperties.getTitle();
 				String path = exportingFolderPath + title + "/Audio/";
 				File dir = new File(path);
 				dir.mkdirs();
-				if (!new File(path + contentFile.getName()).exists()) {
-					Files.copy(contentFile.toPath(), new File(X3DExporter.getExportingFolderPath() + title + "/Audio/" + contentFile.getName()).toPath());
-					System.out.println("X3DExporter\t" + content + " copied.");
-				}
+//				if (!new File(path + contentFile.getName()).exists()) {
+//					Files.copy(contentFile.toPath(), new File(X3DExporter.getExportingFolderPath() + title + "/Audio/" + contentFile.getName()).toPath());
+//					System.out.println("X3DExporter\t" + content + " copied.");
+//				}
 				path = X3DExporter.getExportingFolderPath() + title + "/Scripts/";
 				dir = new File(path);
 				if (!embeddedScripts && !new File(path + "AudioPlayer.js").exists()) {

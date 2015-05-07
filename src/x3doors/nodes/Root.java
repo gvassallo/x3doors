@@ -3,6 +3,8 @@ package x3doors.nodes;
 import math.Vec3;
 import math.Vec4;
 
+import org.w3c.dom.Element;
+
 public class Root extends SceneObject {
 	/* The root singleton instance */
 	private static Root instance = null;
@@ -36,4 +38,7 @@ public class Root extends SceneObject {
 	public String toX3D() {
 		return "";
 	}
+    public Element toX3Dom(){
+    	return null ; 
+    }
 }

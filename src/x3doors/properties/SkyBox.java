@@ -6,8 +6,7 @@ import java.nio.file.StandardCopyOption;
 
 import util.Utils;
 import util.X3DExportable;
-
-import x3doors.X3DExporter;
+import x3doors.exporters.X3DExporter;
 
 class Skybox implements X3DExportable {
 	/* This array is used to check the correct skybox images extensions */

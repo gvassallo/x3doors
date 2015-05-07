@@ -3,6 +3,9 @@ package x3doors.nodes;
 import math.Matrix4;
 import math.Vec3;
 import math.Vec4;
+
+import org.w3c.dom.Element;
+
 import util.RGBColor;
 import util.Utils;
 
@@ -155,5 +158,11 @@ public class Light extends SceneObject {
 				break;
 		}
 		return X3DString;
+	}
+
+	@Override
+	public Element toX3Dom() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

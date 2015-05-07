@@ -53,7 +53,7 @@ public abstract class Data implements Actionable {
 	 * EMBEDDED: when exporting to X3D scripts are directly embedded in the X3D file. This increments the file size and causes
 	 * the script code to be redundant, may be necessary for solving some X3D player compatibility issue<p>
 	 * EXTERNAL: when exporting to X3D scripts are exported as independent files */
-	protected enum ScriptType {
+	public enum ScriptType {
 		EMBEDDED,
 		EXTERNAL
 	}
