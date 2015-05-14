@@ -5,6 +5,8 @@ import math.Vec4;
 
 import org.w3c.dom.Element;
 
+import util.MyNodeList;
+
 public class Root extends SceneObject {
 	/* The root singleton instance */
 	private static Root instance = null;
@@ -38,7 +40,7 @@ public class Root extends SceneObject {
 	public String toX3D() {
 		return "";
 	}
-    public Element toX3Dom(){
-    	return null ; 
+    public MyNodeList toX3Dom(){
+    	return (new MyNodeList()); 
     }
 }

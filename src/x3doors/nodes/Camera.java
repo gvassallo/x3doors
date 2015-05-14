@@ -1,9 +1,14 @@
 package x3doors.nodes; 
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
 import math.Vec3;
 import math.Vec4;
 
-import org.w3c.dom.Element;
+import util.MyNodeList;
+
+import x3doors.DocInstance;
 
 public class Camera extends SceneObject {
 	private static final double AVATAR_HEIGHT = 1.6;
@@ -128,7 +133,11 @@ public class Camera extends SceneObject {
 	
 	/** @return This camera X3D string */
 	public String toX3D() {
-		String navigationTypeX3DString = "";
+		String X3DString =	"		<NavigationInfo type=\'\"" + getType() + "\"\' visibilityLimit=\"" + farPlane + "\" speed=\"" + speed + "\" avatarSize=\"" + nearPlane + " " + getAvatarHeight() + " " + walkHeight +  "\" headlight=\"false\"/>\n";
+		return X3DString;
+	}
+    public String getType(){ 
+        String navigationTypeX3DString = new String(); 
 		switch (startingExploreMode) {
 		case MANIPULATOR:
 			navigationTypeX3DString += "EXAMINE\" \"ANY";
@@ -143,18 +152,24 @@ public class Camera extends SceneObject {
 			navigationTypeX3DString += "NONE";
 			break;
 		}
-		String X3DString =	"		<NavigationInfo type=\'\"" + navigationTypeX3DString + "\"\' visibilityLimit=\"" + farPlane + "\" speed=\"" + speed + "\" avatarSize=\"" + nearPlane + " " + getAvatarHeight() + " " + walkHeight +  "\" headlight=\"false\"/>\n";
-		return X3DString;
-	}
-
+        return navigationTypeX3DString; 
+    }
 	public static double getAvatarHeight() {
 		return AVATAR_HEIGHT;
 	}
 
 	@Override
-	public Element toX3Dom() {
-		// TODO Auto-generated method stub
-		return null;
+	public MyNodeList toX3Dom() {
+        MyNodeList wrapper = new MyNodeList(); 
+        Document doc = DocInstance.getInstance(); 
+        Element navigationInfo = doc.createElement("NavigationInfo"); 
+        navigationInfo.setAttribute("type", getType()); 
+        navigationInfo.setAttribute("visibilityLimit", ((Double)farPlane).toString()); 
+        navigationInfo.setAttribute("speed", ((Double)speed).toString()); 
+        navigationInfo.setAttribute("avatarSize", nearPlane+" "+getAvatarHeight()+" "+walkHeight); 
+        navigationInfo.setAttribute("headlight", "false"); 
+        wrapper.appendChild(navigationInfo);
+		return wrapper;
 	}
 }
 

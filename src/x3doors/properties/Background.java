@@ -1,9 +1,11 @@
 package x3doors.properties ; 
 
-import util.RGBColor;
-import util.X3DExportable;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
-class Background implements X3DExportable {
+import util.*; 
+import x3doors.DocInstance;
+class Background implements X3DExportable , X3DomExportable{
 		/* The color */
 		RGBColor color;
 		
@@ -22,5 +24,16 @@ class Background implements X3DExportable {
 			String colorX3DString = color.toX3D();
 			return "		<Background groundColor=\"" + colorX3DString + "\" skyColor=\"" + colorX3DString + "\"/>\n";
 		}
+        public MyNodeList toX3Dom(){
+             MyNodeList wrapper = new MyNodeList(); 
+             Document doc = DocInstance.getInstance(); 
+             Element background = doc.createElement("Background"); 
+			 String colorX3DString = color.toX3D();
+             background.setAttribute("groupColor", colorX3DString); 
+             background.setAttribute("skyColor", colorX3DString); 
+             wrapper.appendChild(background); 
+             return wrapper; 
+        }
+
 	}
 	

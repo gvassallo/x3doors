@@ -4,10 +4,14 @@ import math.Matrix4;
 import math.Vec3;
 import math.Vec4;
 
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import util.MyNodeList;
 import util.RGBColor;
 import util.Utils;
+
+import x3doors.DocInstance;
 
 
 
@@ -161,8 +165,52 @@ public class Light extends SceneObject {
 	}
 
 	@Override
-	public Element toX3Dom() {
-		// TODO Auto-generated method stub
-		return null;
+	public MyNodeList toX3Dom() {
+        Document doc = DocInstance.getInstance();
+		Vec4 direction = new Vec3(0, 0, -1).toVec4().times(new Matrix4().setRotate(transform.localRotationCoordinates.x, transform.localRotationCoordinates.y, transform.localRotationCoordinates.z, transform.localRotationCoordinates.w));
+		double angleRad = angle * Math.PI / 180;
+        MyNodeList wrapper= new MyNodeList(); 
+        Element light; 
+        switch(type){ 
+            case AMBIENT : 
+                return wrapper;
+            case DIRECTIONAL : 	
+                light = doc.createElement("DirectionalLight"); 
+                light.setAttribute("DEF", name);
+                light.setAttribute("color", diffuse.toX3D()); 
+                light.setAttribute("direction", direction.toVec3().toX3D());
+                light.setAttribute("intensity", Utils.double2StringFormat(intensity)); 
+                light.setAttribute("ambientIntensity", "0.1"); 
+                break; 
+            case POINT : 
+                light = doc.createElement("PointLight"); 
+                light.setAttribute("DEF", name);
+                light.setAttribute("color", diffuse.toX3D()); 
+                light.setAttribute("intensity", Utils.double2StringFormat(intensity)); 
+                light.setAttribute("location", transform.localTranslationCoordinates.toX3D());
+                light.setAttribute("ambientIntensity", "0.1"); 
+                light.setAttribute("attuation", Utils.double2StringFormat(constant) + " " + Utils.double2StringFormat(linear) + " " + Utils.double2StringFormat(quadratic));
+                break; 
+            case SPOT: 
+                light = doc.createElement("SpotLight"); 
+                light.setAttribute("DEF", name);
+                light.setAttribute("color", diffuse.toX3D()); 
+                light.setAttribute("direction", direction.toVec3().toX3D());
+                light.setAttribute("intensity", Utils.double2StringFormat(intensity)); 
+                light.setAttribute("ambientIntensity", "0.1"); 
+                light.setAttribute("attuation", Utils.double2StringFormat(constant) + " " + Utils.double2StringFormat(linear) + " " + Utils.double2StringFormat(quadratic));
+                light.setAttribute("location", transform.localTranslationCoordinates.toX3D());
+                light.setAttribute("beamWidth", Utils.double2StringFormat(angleRad)); 
+                light.setAttribute("cutOffAngle", Utils.double2StringFormat(Math.PI / 2 - angleRad));
+                break;
+            default:
+                light = doc.createElement("Default"); 
+
+        }
+                
+        wrapper.appendChild(light);                 
+
+         
+		return wrapper;
 	}
 }

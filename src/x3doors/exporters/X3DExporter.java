@@ -12,15 +12,8 @@ import util.Utils;
 import util.XMLFormatter;
 import x3doors.Data;
 import x3doors.actions.Behaviour;
-import x3doors.actions.sensors.AND;
-import x3doors.actions.sensors.Click;
-import x3doors.actions.sensors.OR;
-import x3doors.actions.sensors.Sensor;
-import x3doors.nodes.Camera;
-import x3doors.nodes.Light;
-import x3doors.nodes.Mesh;
-import x3doors.nodes.Root;
-import x3doors.nodes.SceneObject;
+import x3doors.actions.sensors.*;
+import x3doors.nodes.*;
 import x3doors.properties.SceneProperties;
 
 class X3DInfo {

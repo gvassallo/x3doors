@@ -3,16 +3,13 @@ package x3doors.nodes;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
-/* Root class (maybe ) */ 
-
-
-
-
-
+/* Root class (maybe ) */
 
 import math.Matrix4;
 import math.Vec3;
 import math.Vec4;
+
+import util.MyNodeList;
 import util.Printable;
 import util.X3DExportable;
 import util.X3DomExportable;
@@ -66,6 +63,9 @@ public abstract class SceneObject implements Printable, X3DExportable, X3DomExpo
     /** @return The scene object register size */
     public static int registerSize() {
         return register.size();
+    }
+    public MyNodeList toX3Dom(){
+         return (new MyNodeList()); 
     }
 
     /** Creates a scene object with the given properties.

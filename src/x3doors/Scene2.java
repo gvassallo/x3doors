@@ -2,7 +2,12 @@ package x3doors;
 
 import math.Vec3;
 import math.Vec4;
+import x3doors.actions.Behaviour;
+import x3doors.actions.controllers.Visibility;
+import x3doors.actions.sensors.Click;
+import x3doors.exporters.X3DExporter;
 import x3doors.nodes.*;
+import x3doors.properties.SceneProperties;
 public class Scene2 {
 	@SuppressWarnings("unused")
 	public static void main(String[] args) throws Exception {

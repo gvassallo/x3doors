@@ -3,6 +3,7 @@ package x3doors.nodes;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import util.MyNodeList;
 import util.Printable;
 import util.RGBColor;
 import util.Utils;
@@ -72,9 +73,9 @@ public class Material implements Printable, X3DExportable, X3DomExportable {
         String X3DString = " transparency=\"" + Utils.double2StringFormat(1 - alpha) + "\" ambientIntensity=\"" + Utils.double2StringFormat(ambientIntensity) + "\" shininess=\"" + Utils.double2StringFormat(shininess) + "\" diffuseColor=\"" + diffuse.toX3D() + "\" specularColor=\"" + specular.toX3D() + "\" emissiveColor=\"" + emissive.toX3D() + "\"/>\n";
         return X3DString;
     }
-    public Element toX3Dom()  {
+    public MyNodeList toX3Dom()  {
    
-    	 Document doc = DocInstance.getInstance();           
+    	Document doc = DocInstance.getInstance();           
         Element  material = doc.createElement("Material"); 
         double ambientIntensity = ambient.r == ambient.g && ambient.g == ambient.b ? Utils.normalizeDouble(ambient.r, 255.0) : 0.2;
         material.setAttribute("transparency", Utils.double2StringFormat(1 - alpha) );
@@ -83,7 +84,9 @@ public class Material implements Printable, X3DExportable, X3DomExportable {
         material.setAttribute("diffuseColor", diffuse.toX3D()); 
         material.setAttribute("specularColor", specular.toX3D()); 
         material.setAttribute("emissiveColor", emissive.toX3D()); 
-        return material; 
+        MyNodeList mat = new MyNodeList(); 
+        mat.appendChild(material);
+        return mat; 
        }
 }
     

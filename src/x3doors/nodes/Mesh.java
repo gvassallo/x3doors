@@ -5,8 +5,11 @@ import math.Vec4;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import x3doors.*; 
+
+import util.MyNodeList;
 import util.RGBColor;
+
+import x3doors.DocInstance;
 
 public class Mesh extends SceneObject {
 	/* The mesh type */
@@ -176,7 +179,8 @@ public class Mesh extends SceneObject {
 		return X3DString;
 	}
 
-    public Element toX3Dom()  {
+    public MyNodeList toX3Dom()  {
+       MyNodeList wrapper = new MyNodeList(); 
        Document doc = DocInstance.getInstance();  
        /* define the transform  */
        String meshType = new String();  
@@ -197,11 +201,14 @@ public class Mesh extends SceneObject {
        Element mesh = doc.createElement(meshType); 
        mesh.setAttribute("DEF", this.name); 
        Element appearance = doc.createElement("Appearance");  
-       Element material = this.material.toX3Dom() ;
+       Element material = this.material.toX3Dom().get(0) ;
        material.setAttribute("DEF", this.name+"_Material"); 
        appearance.appendChild(material); 
-       mesh.appendChild(appearance); 
-       return mesh; 
+       Element shape = doc.createElement("Shape"); 
+       shape.appendChild(mesh); 
+       shape.appendChild(appearance); 
+       wrapper.appendChild(shape); 
+       return wrapper; 
     }
     
 }
