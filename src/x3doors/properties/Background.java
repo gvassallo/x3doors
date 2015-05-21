@@ -5,7 +5,7 @@ import org.w3c.dom.Element;
 
 import util.*; 
 import x3doors.DocInstance;
-class Background implements X3DExportable , X3DomExportable{
+public class Background implements X3DExportable , X3DomExportable{
 		/* The color */
 		RGBColor color;
 		
@@ -29,7 +29,7 @@ class Background implements X3DExportable , X3DomExportable{
              Document doc = DocInstance.getInstance(); 
              Element background = doc.createElement("Background"); 
 			 String colorX3DString = color.toX3D();
-             background.setAttribute("groupColor", colorX3DString); 
+             background.setAttribute("groundColor", colorX3DString); 
              background.setAttribute("skyColor", colorX3DString); 
              wrapper.appendChild(background); 
              return wrapper; 

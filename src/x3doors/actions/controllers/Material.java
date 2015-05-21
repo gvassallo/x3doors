@@ -2,8 +2,11 @@ package x3doors.actions.controllers;
 
 import java.util.ArrayList;
 
+import util.MyNodeList;
 import util.RGBColor;
 import util.Utils;
+
+import x3doors.nodes.Light;
 import x3doors.nodes.SceneObject;
 
 public class Material extends Controller {
@@ -154,5 +157,6 @@ public class Material extends Controller {
 		}
 		
 		return X3DString;
-	}
-}
+	}    
+    
+    }

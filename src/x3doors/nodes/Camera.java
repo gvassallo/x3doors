@@ -161,14 +161,14 @@ public class Camera extends SceneObject {
 	@Override
 	public MyNodeList toX3Dom() {
         MyNodeList wrapper = new MyNodeList(); 
-        Document doc = DocInstance.getInstance(); 
-        Element navigationInfo = doc.createElement("NavigationInfo"); 
-        navigationInfo.setAttribute("type", getType()); 
-        navigationInfo.setAttribute("visibilityLimit", ((Double)farPlane).toString()); 
-        navigationInfo.setAttribute("speed", ((Double)speed).toString()); 
-        navigationInfo.setAttribute("avatarSize", nearPlane+" "+getAvatarHeight()+" "+walkHeight); 
-        navigationInfo.setAttribute("headlight", "false"); 
-        wrapper.appendChild(navigationInfo);
+       Document doc = DocInstance.getInstance(); 
+       Element navigationInfo = doc.createElement("NavigationInfo"); 
+       navigationInfo.setAttribute("type", "\""+getType()+"\""); 
+       navigationInfo.setAttribute("visibilityLimit", ((Double)farPlane).toString()); 
+       navigationInfo.setAttribute("speed", ((Double)speed).toString()); 
+       navigationInfo.setAttribute("avatarSize", nearPlane+" "+getAvatarHeight()+" "+walkHeight); 
+       navigationInfo.setAttribute("headlight", "false"); 
+       wrapper.appendChild(navigationInfo);
 		return wrapper;
 	}
 }

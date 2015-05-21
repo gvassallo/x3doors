@@ -29,7 +29,11 @@ public class SceneProperties implements X3DExportable, X3DomExportable {
     private Skybox skybox;
     /* The scene active camera */
     private Camera activeCamera;
-
+    private boolean debug = false; 
+    
+    public static  void  setDebugMode(boolean value){ 
+        SceneProperties.getInstance().debug=value; 
+    }
     /* Creates the singleton instance with its default values */
     private SceneProperties() {
         title = (title == null || title.equals("")) ? "NewScene" + counter++ : title;
@@ -135,7 +139,12 @@ public class SceneProperties implements X3DExportable, X3DomExportable {
     public static Camera getActiveCamera() {
         return SceneProperties.getInstance().activeCamera;
     }
-
+    public  Background getBackground(){ 
+        return this.background; 
+    }
+    public  Skybox getSkyBox(){
+         return this.skybox; 
+    }
     /** @return The scene properties X3D string */
     public String toX3D() {		
         String X3DString =	"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
@@ -171,11 +180,14 @@ public class SceneProperties implements X3DExportable, X3DomExportable {
         link.setAttribute("rel", "stylesheet");
         head.appendChild(link);
         Element script = doc.createElement("script");
-        script.setAttribute("src", "http://www.x3dom.org/x3dom/release/x3dom.js");
+        if (debug)
+            script.setAttribute("src", "https://gist.githubusercontent.com/Gabriele01/88617161697488b11085/raw/5ba63a1258f9d56d15f0110d26b8006b536c55f1/x3dom.debug.js");
+        else 
+            script.setAttribute("src", "https://gist.githubusercontent.com/Gabriele01/7bbd9c07eab333b7d5c1/raw/1d636f22a8c6a0521f55a713d321ecac9806b140/x3dom.js");
         script.setAttribute("type", "text/javascript");
         head.appendChild(script);
         script = doc.createElement("script");
-        script.setAttribute("src", "./extra-x3dom-nodes.js");
+        script.setAttribute("src", "https://gist.githubusercontent.com/Gabriele01/e2c975c368f59fb76210/raw/0e9ef58964d1a82c2a598754c5f3e0199496c3a9/extra-x3dom-nodes.js");
         script.setAttribute("type", "text/javascript");
         head.appendChild(script);
         html.appendChild(head); 

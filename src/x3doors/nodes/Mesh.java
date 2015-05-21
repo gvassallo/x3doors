@@ -18,7 +18,9 @@ public class Mesh extends SceneObject {
 	private Material material;
 	/* If true back faces are rendered too */
 	private boolean backFaceCulling;
-	
+    
+    private MyNodeList wrapper ; 
+    private Element elementToAppend; 
 	/** Defines the mesh types, can assume the following values<p>
 	 * BOX: a box of size 1<p>
 	 * RECTANGLE: a squared plane of size 50 */
@@ -78,6 +80,8 @@ public class Mesh extends SceneObject {
 			this.material = new Material();
 		}
 		this.backFaceCulling = backFaceCulling;
+        wrapper = new MyNodeList(); 
+        elementToAppend = wrapper.get(0) ; 
 	}
 	/** Defines a new alpha for this mesh material.
 	 * 
@@ -126,14 +130,22 @@ public class Mesh extends SceneObject {
 	public void setSpecular(RGBColor specular) {
 		material.specular = specular;
 	}
-	
-	/** Print the properties to screen. */
-	public void print() {
-		super.print();
-		material.print();
-		System.out.print(	"BackfaceCulling:\t" + backFaceCulling + "\n");
-	}
-	
+    
+    public void appendElement(Element e){ 
+        if (elementToAppend == null) {
+            elementToAppend = e ;  
+        }
+        else {
+            elementToAppend.appendChild(e); 
+            elementToAppend = e ; 
+        }
+
+    }
+
+    public Element getElementToAppend(){
+         return this.elementToAppend; 
+    }
+        	
 	/** @return This material X3D string */
 	public String toX3D() {
 		if (type == Mesh.Type.IMPORTED) {
@@ -180,7 +192,6 @@ public class Mesh extends SceneObject {
 	}
 
     public MyNodeList toX3Dom()  {
-       MyNodeList wrapper = new MyNodeList(); 
        Document doc = DocInstance.getInstance();  
        /* define the transform  */
        String meshType = new String();  
@@ -206,8 +217,10 @@ public class Mesh extends SceneObject {
        appearance.appendChild(material); 
        Element shape = doc.createElement("Shape"); 
        shape.appendChild(mesh); 
-       shape.appendChild(appearance); 
+       shape.appendChild(appearance);
+       MyNodeList wrapper = new MyNodeList(); 
        wrapper.appendChild(shape); 
+       	   
        return wrapper; 
     }
     

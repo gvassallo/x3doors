@@ -14,12 +14,16 @@ public class MyNodeList {
     {
          return nodeList.size(); 
     }
-    public void appendChild(Node node){
+    public MyNodeList appendChild(Node node){
          nodeList.add(node); 
+         return this; 
     }
     public Element get (int i){
         if (i >= nodeList.size() )
             return null ; 
         return (Element) nodeList.get(i); 
+    }
+    public ArrayList<Node> getChildren(){
+         return nodeList;
     }
 }

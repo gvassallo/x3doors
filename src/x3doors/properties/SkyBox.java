@@ -4,11 +4,18 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
+import util.MyNodeList;
 import util.Utils;
 import util.X3DExportable;
+import util.X3DomExportable;
+
+import x3doors.DocInstance;
 import x3doors.exporters.X3DExporter;
 
-class Skybox implements X3DExportable {
+public class Skybox implements X3DExportable, X3DomExportable {
 	/* This array is used to check the correct skybox images extensions */
 	private static final String[] SKYBOX_SUPPORTED_EXTENSIONS = new String[] {"gif", "jpg", "png"};
 	
@@ -45,9 +52,7 @@ class Skybox implements X3DExportable {
 		this.topUrl = topUrl;
 		this.bottomUrl = bottomUrl;
 	}
-	
-	/** @return The skybox X3D string */
-	public String toX3D() {
+    private void createURLs(){
 		try {
 			String title = SceneProperties.getTitle();
 			String path = X3DExporter.getExportingFolderPath() + title + "/Textures/Skybox/";
@@ -62,7 +67,29 @@ class Skybox implements X3DExportable {
 		}
 		catch (Exception exception) {
 			// This exception should never be thrown because the path are checked in the skybox constructor
-			System.out.println("X3DExporter:\tfailure reported copying " + exception.getMessage());
-		}
-		return "		<Background frontUrl=\"Textures/Skybox/front.png\" backUrl=\"Textures/Skybox/back.png\" leftUrl=\"Textures/Skybox/left.png\" rightUrl=\"Textures/Skybox/right.png\" topUrl=\"Textures/Skybox/top.png\" bottomUrl=\"Textures/Skybox/bottom.png\"/>\n";
-	}}
+			System.out.println("X3DExporter:\tfailure reported copying " + exception.getMessage());}
+         
+    }
+	/** @return The skybox X3D string */
+	public String toX3D() {
+	    createURLs(); 	
+		return "		<Background frontUrl=\"Textures/Skybox/front.png\" backUrl=\"Textures/Skybox/back.png\" leftUrl=\"Textures/Skybox/left.png\" rightUrl=\"Textures/Skybox/right.png\" topUrl=\"Textures/Skybox/top.png\" bottomUrl=\"Textures/Skybox/bottom.png\"/>\n"; 	
+    }
+    public MyNodeList toX3Dom(){ 
+        createURLs(); 
+        MyNodeList wrapper = new  MyNodeList(); 
+        Document doc = DocInstance.getInstance(); 
+        Element skybox = doc.createElement("Background"); 
+        skybox.setAttribute("frontUrl", "Textures/Skybox/front.png"); 
+        skybox.setAttribute("backUrl", "Textures/Skybox/back.png"); 
+        skybox.setAttribute("leftUrl", "Textures/Skybox/left.png"); 
+        skybox.setAttribute("rightUrl", "Textures/Skybox/right.png"); 
+        skybox.setAttribute("topUrl", "Textures/Skybox/top.png"); 
+        skybox.setAttribute("bottomUrl", "Textures/Skybox/bottom.png"); 
+        wrapper.appendChild(skybox) ;
+        return wrapper; 
+    }
+
+
+
+}

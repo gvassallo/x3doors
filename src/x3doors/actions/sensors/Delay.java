@@ -1,6 +1,12 @@
 package x3doors.actions.sensors;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
+import util.MyNodeList;
 import util.Utils;
+
+import x3doors.DocInstance;
 
 public class Delay extends Sensor {
 
@@ -71,4 +77,25 @@ public class Delay extends Sensor {
 							"					<ROUTE fromNode=\"" + name + "\" fromField=\"delayComplete\" toNode=\"" + name + "_Filter\" toField=\"set_boolean\"/>\n";
 		return X3DString;
 	}
+
+	@Override
+	public MyNodeList toX3Dom() {
+		MyNodeList wrapper = new MyNodeList(); 
+        Document doc = DocInstance.getInstance(); 
+        Element filter = 	doc.createElement("BooleanFilter"); 
+        filter.setAttribute("DEF", name+"_Filter"); 
+        Element route1 = doc.createElement("ROUTE"); 
+        Element delaySensor = doc.createElement("DelaySensor"); 
+        delaySensor.setAttribute("DEF", name); 
+        delaySensor.setAttribute("delay", Utils.double2StringFormat(delayTime)); 
+        route1.setAttribute("fromNode", name); 
+        route1.setAttribute("fromField","delayComplete" ); 
+        route1.setAttribute("toNode", name+"_Filter"); 
+        route1.setAttribute("toField", "set_boolean"); 
+        wrapper.appendChild(filter); 
+        wrapper.appendChild(delaySensor); 
+        wrapper.appendChild(route1); 
+        return wrapper;
+	}
+
 }
