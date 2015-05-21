@@ -1,8 +1,8 @@
 .DS_Store
-.classpath 
 bin
 *.class 
 Textures
 ExportedScenes 
 JavascriptSensors 
 .settings
+*.swp
