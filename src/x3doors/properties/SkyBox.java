@@ -9,13 +9,12 @@ import org.w3c.dom.Element;
 
 import util.MyNodeList;
 import util.Utils;
-import util.X3DExportable;
 import util.X3DomExportable;
 
 import x3doors.DocInstance;
 import x3doors.exporters.X3DExporter;
 
-public class Skybox implements X3DExportable, X3DomExportable {
+public class Skybox implements  X3DomExportable {
 	/* This array is used to check the correct skybox images extensions */
 	private static final String[] SKYBOX_SUPPORTED_EXTENSIONS = new String[] {"gif", "jpg", "png"};
 	
@@ -69,11 +68,6 @@ public class Skybox implements X3DExportable, X3DomExportable {
 			// This exception should never be thrown because the path are checked in the skybox constructor
 			System.out.println("X3DExporter:\tfailure reported copying " + exception.getMessage());}
          
-    }
-	/** @return The skybox X3D string */
-	public String toX3D() {
-	    createURLs(); 	
-		return "		<Background frontUrl=\"Textures/Skybox/front.png\" backUrl=\"Textures/Skybox/back.png\" leftUrl=\"Textures/Skybox/left.png\" rightUrl=\"Textures/Skybox/right.png\" topUrl=\"Textures/Skybox/top.png\" bottomUrl=\"Textures/Skybox/bottom.png\"/>\n"; 	
     }
     public MyNodeList toX3Dom(){ 
         createURLs(); 

@@ -4,14 +4,12 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import util.MyNodeList;
-import util.Printable;
 import util.RGBColor;
 import util.Utils;
-import util.X3DExportable;
 import util.X3DomExportable;
 import x3doors.DocInstance;
 
-public class Material implements Printable, X3DExportable, X3DomExportable {
+public class Material implements  X3DomExportable {
     /* The transparency of this material. When alpha equals 1.0 the scene object is opaque,
      * when 0.0 it is fully transparent (transparency = 1 - alpha) */
     // 3Doors range: [0.0, 1.0]
@@ -54,25 +52,6 @@ public class Material implements Printable, X3DExportable, X3DomExportable {
         this.specular = specular;
     }
 
-    /** Print the properties to screen. */
-    public void print() {
-        System.out.println(	"Alpha:\t\t\t" + alpha + "\n" +
-                "Ambient:\t\t" + ambient.r + "\t" + ambient.g + "\t" + ambient.b + "\n" +
-                "Diffuse:\t\t" + diffuse.r + "\t" + diffuse.g + "\t" + diffuse.b + "\n" +
-                "Emissive:\t\t" + emissive.r + "\t" + emissive.g + "\t" + emissive.b + "\n" +
-                "Shininess:\t\t" + shininess + "\n" +
-                "Specular:\t\t" + specular.r + "\t" + specular.g + "\t" + specular.b
-                );
-    }
-
-    /** @return The material X3D string */
-    public String toX3D() {
-        // TODO: Add a shader to capture the material ambient color in the X3D exporting process. At the moment it is
-        // exported using the default value 0.2
-        double ambientIntensity = ambient.r == ambient.g && ambient.g == ambient.b ? Utils.normalizeDouble(ambient.r, 255.0) : 0.2; // LOSSY solution
-        String X3DString = " transparency=\"" + Utils.double2StringFormat(1 - alpha) + "\" ambientIntensity=\"" + Utils.double2StringFormat(ambientIntensity) + "\" shininess=\"" + Utils.double2StringFormat(shininess) + "\" diffuseColor=\"" + diffuse.toX3D() + "\" specularColor=\"" + specular.toX3D() + "\" emissiveColor=\"" + emissive.toX3D() + "\"/>\n";
-        return X3DString;
-    }
     public MyNodeList toX3Dom()  {
    
     	Document doc = DocInstance.getInstance();           

@@ -12,11 +12,6 @@ import x3doors.DocInstance;
 
 public class Camera extends SceneObject {
 	private static final double AVATAR_HEIGHT = 1.6;
-	/** Defines the scene explore mode types, can assume the following values<p>
-	 * MANIPULATOR: examine<p>
-	 * HUMAN: explore as a human avatar<p>
-	 * HELICOPTER: fly like an helicopter<p>
-	 * DISABLED: disables any interactivity with the scene */
 	public enum exploreModeType {
 		MANIPULATOR,
 		HUMAN,
@@ -43,14 +38,6 @@ public class Camera extends SceneObject {
 	/* The speed of the camera's avatar when moving */
 	// 3Doors range: [0.0, 100.0];
 	private double speed;
-	// TODO: Find a way to capture these parameters in the X3D exporting process
-	// private double speedMin;
-	// private double speedMax;
-	// private double rotationSpeed;
-	// private double walkDistance;
-	// private double gravity;
-	/* The tallest height the avatar can walk over */
-	// 3Doors range: [0.001, 999999.0]
 	private double walkHeight;
 	/* The scene explore mode type */
 	private exploreModeType startingExploreMode;
@@ -131,11 +118,6 @@ public class Camera extends SceneObject {
 		return perspective;
 	}
 	
-	/** @return This camera X3D string */
-	public String toX3D() {
-		String X3DString =	"		<NavigationInfo type=\'\"" + getType() + "\"\' visibilityLimit=\"" + farPlane + "\" speed=\"" + speed + "\" avatarSize=\"" + nearPlane + " " + getAvatarHeight() + " " + walkHeight +  "\" headlight=\"false\"/>\n";
-		return X3DString;
-	}
     public String getType(){ 
         String navigationTypeX3DString = new String(); 
 		switch (startingExploreMode) {

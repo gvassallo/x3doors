@@ -1,0 +1,24 @@
+h3.title { 
+    font-size: 350%; 
+    font-family: Helvetica;
+    font-weight: normal; 
+    text-align : center; 
+    margin-top: 20px;
+    margin-bottom: 20px; 
+    /* color :  */
+
+}
+div.list  {
+     font-size: 180%;
+     font-family: Helvetica;
+     font-weight: normal;
+     color: #444444;
+     padding-left: 1020px; 
+        
+}
+
+div.list li {
+     margin-top = 20px; 
+     /* margin-bottom = 5px;  */
+}
+

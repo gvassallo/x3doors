@@ -5,7 +5,7 @@ import org.w3c.dom.Element;
 
 import util.*; 
 import x3doors.DocInstance;
-public class Background implements X3DExportable , X3DomExportable{
+public class Background implements  X3DomExportable{
 		/* The color */
 		RGBColor color;
 		
@@ -19,11 +19,6 @@ public class Background implements X3DExportable , X3DomExportable{
 			this.color = new RGBColor(r, g, b);
 		}
 		
-		/** @return The background X3D string */
-		public String toX3D() {
-			String colorX3DString = color.toX3D();
-			return "		<Background groundColor=\"" + colorX3DString + "\" skyColor=\"" + colorX3DString + "\"/>\n";
-		}
         public MyNodeList toX3Dom(){
              MyNodeList wrapper = new MyNodeList(); 
              Document doc = DocInstance.getInstance(); 

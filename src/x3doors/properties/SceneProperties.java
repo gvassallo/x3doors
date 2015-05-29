@@ -38,7 +38,7 @@ public class SceneProperties implements X3DExportable, X3DomExportable {
     private SceneProperties() {
         title = (title == null || title.equals("")) ? "NewScene" + counter++ : title;
         description = "";
-        creator = "Luca Martini";
+        creator = "Gabriele Vassallo";
         background = new Background(0, 0, 0);
         skybox = null;
         try {
@@ -145,25 +145,6 @@ public class SceneProperties implements X3DExportable, X3DomExportable {
     public  Skybox getSkyBox(){
          return this.skybox; 
     }
-    /** @return The scene properties X3D string */
-    public String toX3D() {		
-        String X3DString =	"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
-            "<!DOCTYPE X3D PUBLIC \"ISO//Web3D//DTD X3D 3.3//EN\" \"http://www.web3d.org/specifications/x3d-3.3.dtd\">\n" +
-            "<X3D profile=\'Immersive\' version=\'3.3\' xmlns:xsd=\'http://www.w3.org/2001/XMLSchema-instance\' xsd:noNamespaceSchemaLocation=\'http://www.web3d.org/specifications/x3d-3.3.xsd\'>\n" +
-            "	<head>\n" + (!activeCamera.isPerspective() ?
-                    "		<component level=\"3\" name=\"Navigation\"/>\n" : "") +
-            new Metadata(title + ".x3d", "title").toX3D() +
-            new Metadata(description, "description").toX3D() +
-            new Metadata(creator, "creator").toX3D() +
-            new Metadata("http://someURI/" + title + ".x3d", "identifier").toX3D() +
-            new Metadata("X3Doors X3D exporter", "generator").toX3D() +
-            "	</head>\n" +
-            "	<Scene>\n";		
-        System.out.println("X3DExporter:\tfile header created.");
-
-        X3DString += (background != null ? background.toX3D() : skybox.toX3D());
-        return X3DString;
-    }
 
     public MyNodeList toX3Dom(){
         Document doc = DocInstance.getInstance();          
@@ -187,7 +168,7 @@ public class SceneProperties implements X3DExportable, X3DomExportable {
         script.setAttribute("type", "text/javascript");
         head.appendChild(script);
         script = doc.createElement("script");
-        script.setAttribute("src", "https://gist.githubusercontent.com/Gabriele01/e2c975c368f59fb76210/raw/0e9ef58964d1a82c2a598754c5f3e0199496c3a9/extra-x3dom-nodes.js");
+        script.setAttribute("src", "https://gist.githubusercontent.com/Gabriele01/e2c975c368f59fb76210/raw/af097e032a243931c47fe6f3b9e88b38e58701a8/extra-x3dom-nodes.js");
         script.setAttribute("type", "text/javascript");
         head.appendChild(script);
         html.appendChild(head); 

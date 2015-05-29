@@ -93,76 +93,6 @@ public class Light extends SceneObject {
 		this(name, type, worldTranslationCoordinates, worldRotationCoordinates, Root.getInstance());
 	}
 	
-	public String toX3D() {
-		String X3DString = "";
-		Vec4 direction = new Vec3(0, 0, -1).toVec4().times(new Matrix4().setRotate(transform.localRotationCoordinates.x, transform.localRotationCoordinates.y, transform.localRotationCoordinates.z, transform.localRotationCoordinates.w));
-		double angleRad = angle * Math.PI / 180;
-		switch (type) {
-			case AMBIENT:
-				break;
-			case DIRECTIONAL:
-				X3DString +=	"		<DirectionalLight DEF=\"" + name + "\" color=\"" + diffuse.toX3D() + "\" direction=\"" + direction.toVec3().toX3D() + "\" intensity=\"" + Utils.double2StringFormat(intensity) + "\" ambientIntensity=\"0.1\"/>\n" + (Light.drawLightSources ?
-								"		<Transform DEF=\"" + name + "_Placeholder_Translation\" translation=\"" + transform.localTranslationCoordinates.toX3D() + "\">\n" +
-								"		<Transform DEF=\"" + name + "_Placeholder_Rotation\" rotation=\"" + transform.localRotationCoordinates.toX3D() + "\">\n" +
-								"		<Transform scale=\"" + Utils.double2StringFormat(transform.localScaleFactor.x) + " " + Utils.double2StringFormat(transform.localScaleFactor.y) + " " + Utils.double2StringFormat(transform.localScaleFactor.z) + "\">\n" +
-								"		<Transform rotation=\"1 0 0 -1.57\">\n" +
-								"		<Transform translation=\"0 0 2\">\n" +
-								"			<Shape>\n" +
-								"				<Cone height=\"1\" bottomRadius=\"0.5\"/>" +
-								"				<Appearance>\n" +
-								"					<Material emissiveColor=\"1 1 0\" transparency=\"0.5\"/>\n" +
-								"				</Appearance>\n" +
-								"			</Shape>\n" +
-								"			<Transform translation=\"0 -1 0\">\n" +
-								"			<Shape>\n" +
-								"				<Cylinder height=\"1\" radius=\"0.4\"/>" +
-								"				<Appearance>\n" +
-								"					<Material emissiveColor=\"1 1 0\" transparency=\"0.5\"/>\n" +
-								"				</Appearance>\n" +
-								"			</Shape>\n" +
-								"		</Transform>\n" +
-								"		</Transform>\n" +
-								"		</Transform>\n" +
-								"		</Transform>\n" +
-								"		</Transform>\n" +
-								"		</Transform>\n" : "");
-				break;
-			case POINT:
-				X3DString +=	"		<PointLight DEF=\"" + name + "\" color=\"" + diffuse.toX3D() + "\" location=\"" + transform.localTranslationCoordinates.toX3D() + "\" intensity=\"" + Utils.double2StringFormat(intensity) + "\" ambientIntensity=\"0.1\" attenuation=\"" + Utils.double2StringFormat(constant) + " " + Utils.double2StringFormat(linear) + " " + Utils.double2StringFormat(quadratic) + "\"/>\n" + (Light.drawLightSources ?
-								"		<Transform DEF=\"" + name + "_Placeholder_Translation\" translation=\"" + transform.localTranslationCoordinates.toX3D() + "\">\n" +
-								"		<Transform DEF=\"" + name + "_Placeholder_Rotation\" rotation=\"" + transform.localRotationCoordinates.toX3D() + "\">\n" +
-								"		<Transform scale=\"" + Utils.double2StringFormat(transform.localScaleFactor.x) + " " + Utils.double2StringFormat(transform.localScaleFactor.y) + " " + Utils.double2StringFormat(transform.localScaleFactor.z) + "\">\n" +
-								"			<Shape>\n" +
-								"				<Sphere/>" +
-								"				<Appearance>\n" +
-								"					<Material emissiveColor=\"1 1 0\" transparency=\"0.5\"/>\n" +
-								"				</Appearance>\n" +
-								"			</Shape>\n" +
-								"		</Transform>\n" +
-								"		</Transform>\n" +
-								"		</Transform>\n" : "");
-				break;
-			// TODO: Find a way to implement the light ambient chromatic component, maybe with a shader?
-			case SPOT:
-				X3DString +=	"		<SpotLight DEF=\"" + name + "\" color=\"" + diffuse.toX3D() + "\" location=\"" + transform.localTranslationCoordinates.toX3D() + "\" direction=\"" + direction.toVec3().toX3D() + "\" intensity=\"" + Utils.double2StringFormat(intensity) + "\" ambientIntensity=\"0.1\" attenuation=\"" + Utils.double2StringFormat(constant) + " " + Utils.double2StringFormat(linear) + " " + Utils.double2StringFormat(quadratic) +  "\" beamWidth=\"" + Utils.double2StringFormat(angleRad) + "\" cutOffAngle=\"" + Utils.double2StringFormat(Math.PI / 2 - angleRad) + "\"/>\n" + (Light.drawLightSources ?
-								"		<Transform DEF=\"" + name + "_Placeholder_Translation\" translation=\"" + transform.localTranslationCoordinates.toX3D() + "\">\n" +
-								"		<Transform DEF=\"" + name + "_Placeholder_Rotation\" rotation=\"" + transform.localRotationCoordinates.toX3D() + "\">\n" +
-								"		<Transform scale=\"" + Utils.double2StringFormat(transform.localScaleFactor.x) + " " + Utils.double2StringFormat(transform.localScaleFactor.y) + " " + Utils.double2StringFormat(transform.localScaleFactor.z) + "\">\n" +
-								"		<Transform rotation=\"1 0 0 1.57\">\n" +
-								"			<Shape>\n" +
-								"				<Cone/>" +
-								"				<Appearance>\n" +
-								"					<Material emissiveColor=\"1 1 0\" transparency=\"0.5\"/>\n" +
-								"				</Appearance>\n" +
-								"			</Shape>\n" +
-								"		</Transform>\n" +
-								"		</Transform>\n" +
-								"		</Transform>\n" +
-								"		</Transform>\n" : "");
-				break;
-		}
-		return X3DString;
-	}
 
 	@Override
 	public MyNodeList toX3Dom() {
@@ -205,12 +135,8 @@ public class Light extends SceneObject {
                 break;
             default:
                 light = doc.createElement("Default"); 
-
         }
-                
         wrapper.appendChild(light);                 
-
-         
 		return wrapper;
 	}
 }

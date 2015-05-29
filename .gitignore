@@ -6,3 +6,6 @@ ExportedScenes
 JavascriptSensors 
 .settings
 *.swp
+.idea 
+X3Doors.iml
+workbench.xmi

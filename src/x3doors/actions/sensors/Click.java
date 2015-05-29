@@ -29,18 +29,6 @@ public class Click extends Sensor {
         return objectToClick;
     }
 
-    /** @return This sensor X3D string */
-    public String toX3D() {
-        String X3DString =	"					<BooleanFilter DEF=\"" + name + "_Filter\"/>\n" +
-            "					<BooleanFilter DEF=\"NOT" + name + "_Filter\"/>\n";
-        if (!repeatable) {
-            X3DString += 	"					<ROUTE fromNode=\"" + name + "\" fromField=\"isActive\" toNode=\"" + name + "\" toField=\"enabled\"/>\n";
-        }
-        X3DString +=		"					<ROUTE fromNode=\"" + name + "\" fromField=\"isActive\" toNode=\"NOT"+ name + "_Filter\" toField=\"set_boolean\"/>\n" +
-            "					<ROUTE fromNode=\"NOT" + name + "_Filter\" fromField=\"inputNegate\" toNode=\""+ name + "_Filter\" toField=\"set_boolean\"/>\n";
-        return X3DString;
-    }
-
     public MyNodeList toX3Dom(){
         MyNodeList wrapper = new MyNodeList(); 
         Document doc = DocInstance.getInstance(); 

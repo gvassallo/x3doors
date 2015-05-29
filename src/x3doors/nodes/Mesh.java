@@ -26,9 +26,6 @@ public class Mesh extends SceneObject {
 	 * RECTANGLE: a squared plane of size 50 */
 	public enum Type {
 		BOX,
-		IMPORTED,
-		// TODO: Implement the imported Wavefront .obj files in their own scene object class
-		RECTANGLE,
 		SPHERE
 	}
 	
@@ -65,20 +62,12 @@ public class Mesh extends SceneObject {
 			case BOX:
 				this.name = (name == null || name.equals("")) ? ("Box_" + handle) : name;
 				break;
-			case IMPORTED:
-				this.name = (name == null || name.equals("")) ? ("Imported_" + handle) : name;
-			case RECTANGLE:
-				this.name = (name == null || name.equals("")) ? ("Rectangle_" + handle) : name;
-				break;
 			case SPHERE:
 				this.name = (name == null || name.equals("")) ? ("Sphere_" + handle) : name;
 				break;
 		}
 		this.type = type;
 		// TODO: Remove the following condition when implementing the Wavefront .obj parser for importing .obj files
-		if (this.type != Mesh.Type.IMPORTED) {
-			this.material = new Material();
-		}
 		this.backFaceCulling = backFaceCulling;
         wrapper = new MyNodeList(); 
         elementToAppend = wrapper.get(0) ; 
@@ -146,50 +135,6 @@ public class Mesh extends SceneObject {
          return this.elementToAppend; 
     }
         	
-	/** @return This material X3D string */
-	public String toX3D() {
-		if (type == Mesh.Type.IMPORTED) {
-			return "";
-		}
-		String X3DString =		// "		<Switch DEF=\"" + name + "_Switch\" whichChoice=\"" + (visible ? "0" : "-1") + "\">\n" +
-								"			<Shape DEF=\"" + name + "_Shape\">\n";
-		X3DString +=			"				<Appearance>\n" +
-								"					<Material DEF=\"" + name + "_Material\"" + material.toX3D() +
-								"				</Appearance>\n";
-		String coordIndex = "";
-		String geometryX3DString = "";
-		switch (type) {
-			case BOX:
-				coordIndex += "0 2 1 -1 0 3 2 -1 0 1 5 -1 0 5 4 -1 0 4 7 -1 0 7 3 -1 6 4 5 -1 6 7 4 -1 6 5 1 -1 6 1 2 -1 6 2 3 -1 6 3 7";
-				geometryX3DString +=	"				<Coordinate point=\"-0.5 -0.5 -0.5 0.5 -0.5 -0.5 0.5 0.5 -0.5 -0.5 0.5 -0.5 -0.5 -0.5 0.5 0.5 -0.5 0.5 0.5 0.5 0.5 -0.5 0.5 0.5\"/>\n" +
-										"				<Normal vector=\"-0.57735 -0.57735 -0.57735 0.816497 -0.408248 -0.408248 0.408248 0.408248 -0.816497 -0.408248 0.816497 -0.408248 -0.408248 -0.408248 0.816497 0.408248 -0.816497 0.408248 0.57735 0.57735 0.57735 -0.816497 0.408248 0.408248\"/>\n" +
-										"				<TextureCoordinate point=\"0.25 0.75 0.75 0.75 0.75 0.25 0.25 0.25 0 1 1 1 1 0 0 0\"/>\n";
-				break;
-			case IMPORTED:
-				// TODO: Write a Wavefront .obj parser to import .obj files.
-				// At the moment you must:
-				// - create a new scene in 3Doors
-				// - import the requested .obj file
-				// - export it in X3D
-				// - copy and paste the obj X3D code under the corresponding transform nodes
-				// See http://en.wikipedia.org/wiki/Wavefront_.obj_file
-				break;
-			case RECTANGLE:
-				coordIndex += "0 1 3 -1 0 3 2";
-				geometryX3DString +=	"				<Coordinate point=\"-50 -50 -0 50 -50 0 -50 50 0 50 50 0\"/>\n" +
-										"				<Normal vector=\"0 0 1 0 0 1 0 0 1 0 0 1\"/>\n" +
-										"				<TextureCoordinate point=\"0 0 1 0 0 1 1 1\"/>\n";
-				break;
-			case SPHERE:
-				break;
-		}
-		X3DString +=			"				<IndexedFaceSet DEF=\"IndexedFaceSet_" + name + "\" colorPerVertex=\"false\" solid=\"" + backFaceCulling + "\" coordIndex=\"" + coordIndex + "\">\n" +
-													geometryX3DString +
-								"				</IndexedFaceSet>\n" +
-							"			</Shape>\n";
-								// "		</Switch>\n";
-		return X3DString;
-	}
 
     public MyNodeList toX3Dom()  {
        Document doc = DocInstance.getInstance();  
@@ -202,11 +147,6 @@ public class Mesh extends SceneObject {
            case SPHERE : 
                meshType = "Sphere"; 
                break ; 
-           case RECTANGLE : 
-               meshType = "Rectangle";
-               break ; 
-           case IMPORTED  :
-               break ;
        }
 
        Element mesh = doc.createElement(meshType); 

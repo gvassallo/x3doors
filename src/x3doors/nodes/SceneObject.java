@@ -10,28 +10,23 @@ import math.Vec3;
 import math.Vec4;
 
 import util.MyNodeList;
-import util.Printable;
-import util.X3DExportable;
 import util.X3DomExportable;
 
 
-public abstract class SceneObject implements Printable, X3DExportable, X3DomExportable {
+public abstract class SceneObject implements X3DomExportable {
     /* A map which retrieves a scene object given its handle */
     private static HashMap<Integer, SceneObject> register = new HashMap<Integer, SceneObject>();
     /** The scene object handle. */
     protected int handle;
     /** The scene object name, assigned in subclasses only */
     protected String name;
-    // TODO: Add and manage the following variables for a scene object
-    // protected String DBName;
-    // protected int downloadPriority;
-    /** The scene object transform */
+    /* The scene object transform */
     public Transform transform;
-    /** If true then the scene object and its children are rendered. */
+    /* If true then the scene object and its children are rendered. */
     public boolean visible;
-    /** The scene object parent */
+    /* The scene object parent */
     public SceneObject parent;
-    /** The scene object children list, used to handle hierarchies. */
+    /* The scene object children list, used to handle hierarchies. */
     private ArrayList<SceneObject> children;
 
     /** Stores a scene object in the scene object register by using a hash function.
@@ -137,17 +132,6 @@ public abstract class SceneObject implements Printable, X3DExportable, X3DomExpo
         getChildren().add(child);
     }
 
-    /** Print the properties to screen. */
-    public void print() {
-        System.out.print(	"Handle:\t\t\t" + handle + "\n" +
-                "Name:\t\t\t" + name +"\n" +
-                "Visible:\t\t\t" + visible + "\n" +
-                "Children:\n"
-                );
-        for (int i = 0; i < getChildren().size(); i++) {
-            System.out.print("\t" + getChildren().get(i).name + "\n");
-        }
-    }
     public ArrayList<SceneObject> getChildren() {
 		return children;
 	}

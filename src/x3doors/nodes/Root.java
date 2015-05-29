@@ -30,16 +30,12 @@ public class Root extends SceneObject {
 	 */
 	public static Root getInstance() throws Exception {
 		if (instance == null) {
-			// instance = new Root(new Vec3(0, 0, 0), new Vec4(1, 0, 0, 0), new Vec3(1, 1, 1), true);
-			instance = new Root(new Vec3(12, 13, 14), new Vec4(1, 0, 0, 1.57), new Vec3(1, 1, 1), true);
+			instance = new Root(new Vec3(0, 0, 0), new Vec4(1, 0, 0, 0), new Vec3(1, 1, 1), true);
 			instance.name = "Root";
 		}
 		return instance;
 	}
 	
-	public String toX3D() {
-		return "";
-	}
     public MyNodeList toX3Dom(){
     	return (new MyNodeList()); 
     }
