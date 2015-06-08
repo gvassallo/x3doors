@@ -9,17 +9,16 @@ import x3doors.actions.Behaviour;
 import x3doors.actions.controllers.Controller;
 import x3doors.actions.controllers.Material;
 import x3doors.actions.sensors.Delay;
-import x3doors.actions.sensors.Distance;
 import x3doors.exporters.X3DomExporter;
 import x3doors.nodes.Camera;
 import x3doors.nodes.Light;
 import x3doors.nodes.Mesh;
 import x3doors.properties.SceneProperties;
 
-public class MaterialANDDelay {
+public class MaterialANDDelay extends Scenes {
 
     @SuppressWarnings("unused")
-    public static void main(String[] args) throws Exception {
+    public  static void main() throws Exception  {
 
         SceneProperties.setTitle("MaterialANDDelay");
         SceneProperties.setBackgroundColor(0, 0, 0);
@@ -37,7 +36,7 @@ public class MaterialANDDelay {
                 Camera.exploreModeType.HUMAN);
 
         SceneProperties.setActiveCamera(camera1);
-
+        
         // Define geometries
         Mesh mesh1 = new Mesh(	"Box1",
                 Mesh.Type.BOX,
@@ -60,11 +59,10 @@ public class MaterialANDDelay {
         material1.addKeyFrame(2.16, 0.8, new RGBColor(), new RGBColor(255, 0, 0), new RGBColor(0, 0, 128), 0.5, new RGBColor());
         material1.addKeyFrame(2.80, 0.3, new RGBColor(), new RGBColor(), new RGBColor(128, 128, 128), 0.8, new RGBColor(255, 255, 0));
 
-        Distance distance1 = new Distance("Distance1", false, true, 20.0, mesh1, camera1);
         /* Delay of 3 sec, negated : false, repeatable : false   */
         Delay delay3 = new Delay("Delay3", false, false, 2.000);
         /* Behaviour : after two seconds start the material animation  */
-        Behaviour behaviour3 = new Behaviour("Behaviour3", distance1, material1);
+        Behaviour behaviour3 = new Behaviour("Behaviour3", delay3, material1);
         X3DomExporter.export(); 
 
     }

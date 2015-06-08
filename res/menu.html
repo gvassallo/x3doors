@@ -1,0 +1,21 @@
+<nav id="viewpointMenu" class="menu slide-menu-bottom">
+    <ul>
+        <li><button class="close-menu" onclick="$element.runtime.examine(); updateNavInfo(); return false; ">examine</button>
+        </li>
+        <li><button class="close-menu" onclick="$element.runtime.walk(); updateNavInfo(); return false; ">walk</button>
+        </li>
+        <li><button class="close-menu" onclick="$element.runtime.fly(); updateNavInfo(); return false; ">fly</button>
+        </li>
+    </ul>
+</nav>
+<div id="wrapper">
+    <div id="main">
+        <div class="container">
+            <div class="buttons">
+                <button id="viewpointButton" class="nav-toggler toggle-slide-bottom">Viewpoint</button>
+                <button onclick="$element.runtime.resetView();" >Reset view</button>
+                <button onclick="toggleDebug(this);" >Show debug</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -10,9 +10,9 @@ import org.w3c.dom.Element;
 import util.MyNodeList;
 import util.Utils;
 import util.X3DomExportable;
-
 import x3doors.DocInstance;
-import x3doors.exporters.X3DExporter;
+import x3doors.exporters.X3DomExporter;
+
 
 public class Skybox implements  X3DomExportable {
 	/* This array is used to check the correct skybox images extensions */
@@ -54,7 +54,7 @@ public class Skybox implements  X3DomExportable {
     private void createURLs(){
 		try {
 			String title = SceneProperties.getTitle();
-			String path = X3DExporter.getExportingFolderPath() + title + "/Textures/Skybox/";
+			String path = X3DomExporter.getExportingFolderPath() + title + "/Textures/Skybox/";
 			File dir = new File(path);
 			dir.mkdirs();
 			Files.copy(new File(frontUrl).toPath(), new File(path + "front.png").toPath(), StandardCopyOption.REPLACE_EXISTING);

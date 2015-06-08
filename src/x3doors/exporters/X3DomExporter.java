@@ -154,6 +154,10 @@ public class X3DomExporter {
             transform_2.setAttribute("rotation", sceneObject.transform.localRotationCoordinates.toX3D()); 
             Element scale = doc.createElement("Transform"); 
             scale.setAttribute("scale", Utils.double2StringFormat(sceneObject.transform.localScaleFactor.x) + " " + Utils.double2StringFormat(sceneObject.transform.localScaleFactor.y) + " " + Utils.double2StringFormat(sceneObject.transform.localScaleFactor.z)); 
+            if (sceneObject instanceof Root){
+                 MyNodeList list = new MyNodeList(); 
+                 list = appendChildren(sceneObject, list); 
+            }
             if (isMesh)
                 scale.appendChild(getMesh(sceneObject)); 
             else if(!isCamera || (isCamera && (sceneObject == SceneProperties.getActiveCamera()))){

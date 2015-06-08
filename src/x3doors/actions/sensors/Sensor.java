@@ -3,7 +3,7 @@ package x3doors.actions.sensors;
 import util.Printable;
 import util.*;
 
-public abstract class Sensor implements Printable, X3DomExportable {
+public abstract class Sensor implements  X3DomExportable {
 
     /* This counter is used to assign the sensor name automatically when it is not specified */
     private static int counter = 0;

@@ -11,7 +11,7 @@ import x3doors.DocInstance;
 import x3doors.nodes.Camera;
 
 /* Implemented using the singleton design pattern, there can only be a single scene properties instance */
-public class SceneProperties implements X3DExportable, X3DomExportable {
+public class SceneProperties implements  X3DomExportable {
     /* This counter is used to assign the scene name automatically when it is not specified */
     private static int counter = 0;
 

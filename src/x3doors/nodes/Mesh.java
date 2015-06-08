@@ -16,10 +16,7 @@ public class Mesh extends SceneObject {
 	private Type type;
 	/* The mesh material */
 	private Material material;
-	/* If true back faces are rendered too */
-	private boolean backFaceCulling;
-    
-    private MyNodeList wrapper ; 
+	private MyNodeList wrapper ; 
     private Element elementToAppend; 
 	/** Defines the mesh types, can assume the following values<p>
 	 * BOX: a box of size 1<p>
@@ -67,10 +64,9 @@ public class Mesh extends SceneObject {
 				break;
 		}
 		this.type = type;
-		// TODO: Remove the following condition when implementing the Wavefront .obj parser for importing .obj files
-		this.backFaceCulling = backFaceCulling;
-        wrapper = new MyNodeList(); 
+		wrapper = new MyNodeList(); 
         elementToAppend = wrapper.get(0) ; 
+        this.material = new Material();
 	}
 	/** Defines a new alpha for this mesh material.
 	 * 

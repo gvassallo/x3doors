@@ -22,10 +22,6 @@ public class AND extends LogicalOperator {
         super(name, negated, repeatable, sensor1, sensor2, Type.AND);
     }
 
-    /** @return This sensor X3D string */
-    public String toX3D() {
-        return super.toX3D();
-    }
     public MyNodeList toX3Dom(){ 
         MyNodeList wrapper = new MyNodeList(); 
         Document doc = DocInstance.getInstance(); 
