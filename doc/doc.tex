@@ -1,0 +1,76 @@
+\documentclass[11pt]{article}
+\usepackage[a4paper, margin=2.5cm]{geometry}
+\usepackage[document]{ragged2e}
+% \usepackage[utf8]{inputenc}
+\usepackage{listings}
+\usepackage{setspace}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{setspace}
+\usepackage{graphicx}
+\graphicspath{ {img/} }
+\title{X3Dom Exporter}
+\date{\today}
+\author{Gabriele Vassallo}
+
+
+\begin{document}
+    % \begin{titlepage}
+    %     \begin{center}
+
+        %Title 
+        \maketitle 
+        \vfill
+        \center \includegraphics[height=10.0cm]{x3dom-logo}
+       % \end{center}
+%     \end{titlepage}
+
+\clearpage 
+\tableofcontents
+\clearpage 
+
+\section{Introduzione}
+% \subsection{X3Dom}
+\begin{flushleft}
+X3Dom e' un framework per integrare e manipolare scene (X)3D come fossero elementi DOM in HTML5, i quali sono renderizzati attraverso un plugin X3D, Falsh/Stage3D o WebGL. \\
+Per cui, non conoscendo nessuna delle tecnologie sopracitate, e' possibile realizzare una scena web 3D attraverso l'utilizzo di un liguaggio dichiarativo quale l'X3D. \\
+La direttiva che dichiara l'inizio della scena 3D e' il tag X3D ; da qui in avanti si utilizza tale linguaggio per popolare la scena con diversi elementi ed animazioni. 
+Di seguito un'esempio : 
+
+\vspace{10mm}
+\small \lstinputlisting[language=html]{res/simple.html}
+\center \includegraphics[height=9cm]{simple}
+\end{flushleft}
+\clearpage
+
+\begin{flushleft}
+X3DOM utilizza pagine (X)HTML per incapsulare dati X3D e file X3D opzionali ai quali potrebbero fare riferimento le parti incapsulate. I file X3D, infatti, possono fare riferimento ad altri file dello stesso tipo dando vita ad una gerarchia di indicizzazione. 
+In questo modo la conversione X3D, X3Dom potrebbe sembrare molto semplice, se non fosse che, in questo momento, l'implementazione degli elementi X3D e' completa solo al 
+60\% circa. 
+Del quasi 40\% dei nodi mancanti fanno parte alcuni dei nodi piu' importanti tra cui filtri booleani o essenziali sensori di click. 
+Per ovviare tale problema, il programmatore X3Dom, operando in ambiente Web, potrebbe sfruttare i meccanismi di Event-Trigger di HTML come, ad esempio, l'evento 'onclick' del javascript. 
+\newline
+Poiche' ho dovuto operare in un contesto diverso, ossia in un'ottica di conversione tra questi due formati, ho ritenuto importante utilizzare alcuni dei nodi mancanti; a tal proposito ho sfruttato le API di X3Dom per implementare alcune di queste lacune. 
+\newline 
+In particolare ho realizzato in X3Dom i seguenti nodi : 
+    \begin{itemize}
+        \item Booleans :
+            \begin{itemize}
+                \item BooleanFilter
+                \item BooleanToggle
+            \end{itemize}
+        \item Sequencers
+            \begin{itemize}
+                \item BooleanSequencer
+                \item IntegerSequencer 
+            \end{itemize}
+        \item Triggers
+            \begin{itemize}
+                \item BooleanTrigger
+                \item TimeTrigger
+            \end{itemize}
+        \item TouchSensor
+    \end{itemize}
+\end{flushleft}
+\end{document}
