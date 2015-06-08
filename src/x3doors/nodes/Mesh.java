@@ -18,9 +18,6 @@ public class Mesh extends SceneObject {
 	private Material material;
 	private MyNodeList wrapper ; 
     private Element elementToAppend; 
-	/** Defines the mesh types, can assume the following values<p>
-	 * BOX: a box of size 1<p>
-	 * RECTANGLE: a squared plane of size 50 */
 	public enum Type {
 		BOX,
 		SPHERE

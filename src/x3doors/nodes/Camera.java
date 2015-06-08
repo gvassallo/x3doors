@@ -60,7 +60,7 @@ public class Camera extends SceneObject {
 		// The default 3Doors rotation can be obtained by rotating the default X3D camera orientation this way:
 		// - counterclockwise rotation of 45° around the y-axis, [1, 0, 0, 0.785]
 		// - counterclockwise rotation of 45° around the z-axis first rotated counterclocwise of 45° around the y-axis, that is [[0, 0, 1] * [0, 1, 0, 0.785], 0.785] = [-0.6784, 0.6786, 0.2815, 1.0955]
-		this("", "", new Vec3(943.799, 1334.734, 943.799), new Vec4(-0.6784, 0.6786, 0.2815, 1.0955), 0.1, 10000.0, 44.0, true, 50.0, 1.0, exploreModeType.MANIPULATOR, parent);
+		this("", "", new Vec3(943.799, 1334.734, 943.799), new Vec4(-0.6784, 0.6786, 0.2815, 1.0955), 0.1, 10000.0, 44.0, true, 10.0, 1.0, exploreModeType.MANIPULATOR, parent);
 	}
 	
 	/** Creates a camera using the given parameters.

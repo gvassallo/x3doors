@@ -5,7 +5,6 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.Writer;
 
-import javax.swing.text.Style;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
@@ -16,22 +15,12 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
-import util.MyNodeList;
-import util.Utils;
+import util.*; 
 import x3doors.DocInstance;
 import x3doors.actions.Behaviour;
-import x3doors.actions.sensors.AND;
-import x3doors.actions.sensors.Click;
-import x3doors.actions.sensors.Distance;
-import x3doors.actions.sensors.LogicalOperator;
-import x3doors.actions.sensors.OR;
-import x3doors.actions.sensors.Sensor;
-import x3doors.nodes.Camera;
-import x3doors.nodes.Light;
-import x3doors.nodes.Mesh;
-import x3doors.nodes.Root;
-import x3doors.nodes.SceneObject;
-import x3doors.properties.SceneProperties;
+import x3doors.actions.sensors.*;
+import x3doors.nodes.*; 
+import x3doors.properties.*; 
 
 public class X3DomExporter {
 
@@ -48,58 +37,76 @@ public class X3DomExporter {
     }
 
     public static void export() throws Exception {
-        doc = DocInstance.getInstance(); 
-        Element html = SceneProperties.getInstance().toX3Dom().get(0); 
-        Node head = html.getElementsByTagName("head").item(0);
-        head.appendChild(StyleText.getStyle());
-        
 
         String title = SceneProperties.getTitle();  
-
         File dir = new File(exportingFolderPath + title);
-        // Create a new folder for the exported scene
         dir.mkdir();
-        // Create the exported scene file
         PrintWriter out = new PrintWriter(exportingFolderPath + title + "/" + title + ".xhtml", "UTF-8");
 
+        doc = DocInstance.getInstance(); 
+        /* create the Head of the html file  */
+        Element html = SceneProperties.getInstance().toX3Dom().get(0); 
+        Node head = html.getElementsByTagName("head").item(0);
+        /* append the style.css file on the head  */
+        head.appendChild(StyleText.getStyle());
+        /* create the heading of the file, with a simple title  */
         Element body = doc.createElement("body"); 
-        Element pageTitle = doc.createElement("h3"); 
+        Element pageTitle = doc.createElement("h3");
+        Element div = doc.createElement("div");
+        div.setAttribute("class", "title");
         pageTitle.setAttribute("class", "title"); 
         pageTitle.setTextContent(title);
-        body.appendChild(pageTitle);
+        div.appendChild(pageTitle);
+        body.appendChild(div);
+
+        /* create the X3D main tag  */
         Element X3D = doc.createElement("X3D") ;
+        X3D.setAttribute("class", "someUniqueClass");
         X3D.setAttribute("xmlns", "http://www.web3d.org/specifications/x3d-namespace");
         X3D.setAttribute("id", "someUniqueId");
         X3D.setAttribute("showStat", "false");
         X3D.setAttribute("showLog", "false");
-        X3D.setAttribute("x", "0px");
-        X3D.setAttribute("y", "0px");
-        X3D.setAttribute("width", "1000px");
-        X3D.setAttribute("height", "600px");
+
+        /* start the creation of the x3d scene  */
         Element scene = createScene(doc);  
         X3D.appendChild(scene); 
         body.appendChild(X3D);
+
+        /* two functions to active the slide menu  */
+        String funcName = "classie(); nav();"; 
+
+        /* if there are some distance sensor, with one of the two element that is a camera,  
+            you have to attach to the file a script, one for each sensor,
+            to get the current camera position, using the runtime api of x3dom  
+            for each sensor create a function with his name and finally append functions after the x3d tag */
+
         if(scripts.getLength()!=0){
             Element script = doc.createElement("script");
             String scriptText = ""; 
-            String funcName = ""; 
             for(Node distance : scripts.getChildren()){
                 scriptText += distance.getTextContent();
                 funcName += " " +  ((Element)distance).getAttribute("name") + "();";
             }
             funcName += "";
-            body.setAttribute("onload", funcName); 
             script.setTextContent(scriptText); 
             body.appendChild(script);
         }
-        Runtime.appendRuntimeObject(body);
+        /* make these functions start when the html page is loaded */  
+        body.setAttribute("onload", funcName); 
+        /* then append also the runtime script */ 
+        body.appendChild(Runtime.getRuntimeScript());
+        /* finally append the html menu, to use the runtime script */  
+        Runtime.appendMenu(body);
         html.appendChild(body); 
         doc.appendChild(html); 
+        /* write the DOM document in the file */ 
         out.write(prettyPrint(doc));
         System.out.println(prettyPrint(doc)); 
+
         out.close(); 
     }
 
+    /* convert the content of the DOM document in xml using a TransformerFactory */ 
     public static final String prettyPrint(Document xml) throws Exception {
         Transformer tf = TransformerFactory.newInstance().newTransformer();
         tf.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
@@ -107,8 +114,14 @@ public class X3DomExporter {
         tf.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
         Writer out = new StringWriter();
         tf.transform(new DOMSource(xml), new StreamResult(out));
-        return (out.toString());
+        String outString = out.toString();
+        /* TransformerFactory escapes the <, > in a text node   */
+        outString = outString.replaceAll("&lt;", "<");
+        outString = outString.replaceAll("&gt;", ">");
+        return (outString);
     }
+
+    /* create the scene tag, append the background tag and start the export of each object */ 
     private static Element createScene(Document doc) throws Exception{
         Element scene = doc.createElement("Scene"); 
         if (SceneProperties.getInstance().getBackground() != null)
@@ -119,6 +132,7 @@ public class X3DomExporter {
         scene.appendChild(getActiveCameraElement(doc)); 
         scene.appendChild(getSceneObject(Root.getInstance()).get(0)); 
 
+        /* if there are some behavior, create the interactive group and export them  */
         if (behaviors.getLength()!=0){
             Element group = doc.createElement("Group"); 
             group.setAttribute("DEF", "Interactive"); 
@@ -129,6 +143,7 @@ public class X3DomExporter {
         return scene;  
     }
 
+    /* get the active camera of the scene and set the id used in the distance sensor scripts */ 
     private static Element getActiveCameraElement(Document doc ){
         Camera activeCamera = SceneProperties.getActiveCamera(); 
         Element camera = doc.createElement((activeCamera.perspective? "" : "Ortho") + "Viewpoint");  
@@ -140,6 +155,8 @@ public class X3DomExporter {
         camera.setAttribute("fieldOfView", Utils.double2StringFormat(activeCamera.verticalAngle * 3.14 / 180) );
         return camera; 
     }
+
+    /* recursive function that exports each object of the scene */ 
     private static MyNodeList getSceneObject(SceneObject sceneObject){
         boolean isCamera = sceneObject instanceof Camera; 
         boolean isLight = sceneObject instanceof Light; 
@@ -147,10 +164,10 @@ public class X3DomExporter {
         MyNodeList wrapper = new MyNodeList(); 
         if( !isLight && (!isCamera || (isCamera && (sceneObject == SceneProperties.getActiveCamera())))){
             Element transform_1 = doc.createElement("Transform"); 
-            transform_1.setAttribute("DEF", sceneObject.getName() + /* (isLight ? "_Placeholder" : "") + */  "_Translation"); 
+            transform_1.setAttribute("DEF", sceneObject.getName() + "_Translation"); 
             transform_1.setAttribute("translation", sceneObject.transform.localTranslationCoordinates.toX3D()); 
             Element transform_2 = doc.createElement("Transform"); 
-            transform_2.setAttribute("DEF", sceneObject.getName() + /* (isLight ? "_Placeholder" : "") + */ "_Rotation"); 
+            transform_2.setAttribute("DEF", sceneObject.getName() + "_Rotation"); 
             transform_2.setAttribute("rotation", sceneObject.transform.localRotationCoordinates.toX3D()); 
             Element scale = doc.createElement("Transform"); 
             scale.setAttribute("scale", Utils.double2StringFormat(sceneObject.transform.localScaleFactor.x) + " " + Utils.double2StringFormat(sceneObject.transform.localScaleFactor.y) + " " + Utils.double2StringFormat(sceneObject.transform.localScaleFactor.z)); 
@@ -176,7 +193,6 @@ public class X3DomExporter {
                     wrapper.appendChild(e);
                 }else 
                     wrapper.appendChild(transform_1);
-
             }else 
                 wrapper.appendChild(transform_1); 
         }
@@ -187,6 +203,7 @@ public class X3DomExporter {
         return wrapper; 
     }
 
+    /* if the object is a mesh, add the Switch group, to make the mesh visible or not  */
     private static Element getMesh(SceneObject sceneObject){
         Element Switch = doc.createElement("Switch"); 
         Switch.setAttribute("DEF", sceneObject.getName() + "_Switch"); 
@@ -202,6 +219,7 @@ public class X3DomExporter {
         return Switch; 
     }
 
+    /* for each child export it and append to the parent */ 
     private static MyNodeList  appendChildren(SceneObject sceneObject, MyNodeList parent){
         for (SceneObject child : sceneObject.getChildren()){
             MyNodeList n = getSceneObject(child);   
@@ -240,6 +258,7 @@ public class X3DomExporter {
         return behaviors; 
     }
 
+    /* the touch sensor has to be attached to the object clickable  */
     private static void addClickSensor(Click click){ 
         SceneObject sensorObject = SceneObject.get((click).getObjectToClick()); 
         Element group = doc.createElement("Group"); 
@@ -249,6 +268,5 @@ public class X3DomExporter {
         touchSensor.setAttribute("enabled", "true"); 
         group.appendChild(touchSensor);
         ((Mesh)sensorObject).appendElement(group);  
-
     }
 }

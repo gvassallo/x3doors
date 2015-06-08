@@ -19,7 +19,7 @@ public class StyleText{
         BufferedReader css = new BufferedReader(new FileReader(new File(path))); 
         String line = null; 
         while((line =css.readLine())!= null)
-            styleString += line; 
+            styleString += line + "\n";
         css.close();
         }catch (IOException e){
              System.out.println("style file not found");

@@ -1,4 +1,4 @@
-package x3doors.scenes; 
+package scenes; 
 
 import math.Vec3;
 import math.Vec4;
