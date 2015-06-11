@@ -1,7 +1,6 @@
 \documentclass[11pt]{article}
 \usepackage[a4paper, margin=2.5cm]{geometry}
-\usepackage[document]{ragged2e}
-% \usepackage[utf8]{inputenc}
+\usepackage[utf8]{inputenc}
 \usepackage{listings}
 \usepackage{setspace}
 \usepackage{graphicx}
@@ -9,30 +8,29 @@
 \usepackage{subcaption}
 \usepackage{setspace}
 \usepackage{graphicx}
+\usepackage[table]{xcolor}
 \graphicspath{ {img/} }
 \title{X3Dom Exporter}
 \date{\today}
 \author{Gabriele Vassallo}
+\definecolor{lightgray}{gray}{0.9}
 
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
 
 \begin{document}
-    % \begin{titlepage}
-    %     \begin{center}
 
-        %Title 
-        \maketitle 
-        \vfill
-        \center \includegraphics[height=10.0cm]{x3dom-logo}
-       % \end{center}
-%     \end{titlepage}
+    %Title 
+    \maketitle 
+    \vspace{4cm}
+\begin{center} \includegraphics[height=10.0cm]{x3dom-logo} \end{center}
 
 \clearpage 
 \tableofcontents
 \clearpage 
 
 \section{Introduzione}
-% \subsection{X3Dom}
-\begin{flushleft}
 X3Dom e' un framework per integrare e manipolare scene (X)3D come fossero elementi DOM in HTML5, i quali sono renderizzati attraverso un plugin X3D, Falsh/Stage3D o WebGL. \\
 Per cui, non conoscendo nessuna delle tecnologie sopracitate, e' possibile realizzare una scena web 3D attraverso l'utilizzo di un liguaggio dichiarativo quale l'X3D. \\
 La direttiva che dichiara l'inizio della scena 3D e' il tag X3D ; da qui in avanti si utilizza tale linguaggio per popolare la scena con diversi elementi ed animazioni. 
@@ -40,11 +38,9 @@ Di seguito un'esempio :
 
 \vspace{10mm}
 \small \lstinputlisting[language=html]{res/simple.html}
-\center \includegraphics[height=9cm]{simple}
-\end{flushleft}
+\begin{center} \includegraphics[height=9cm]{simple}\end{center}
 \clearpage
 
-\begin{flushleft}
 X3DOM utilizza pagine (X)HTML per incapsulare dati X3D e file X3D opzionali ai quali potrebbero fare riferimento le parti incapsulate. I file X3D, infatti, possono fare riferimento ad altri file dello stesso tipo dando vita ad una gerarchia di indicizzazione. 
 In questo modo la conversione X3D, X3Dom potrebbe sembrare molto semplice, se non fosse che, in questo momento, l'implementazione degli elementi X3D e' completa solo al 
 60\% circa. 
@@ -54,23 +50,164 @@ Per ovviare tale problema, il programmatore X3Dom, operando in ambiente Web, pot
 Poiche' ho dovuto operare in un contesto diverso, ossia in un'ottica di conversione tra questi due formati, ho ritenuto importante utilizzare alcuni dei nodi mancanti; a tal proposito ho sfruttato le API di X3Dom per implementare alcune di queste lacune. 
 \newline 
 In particolare ho realizzato in X3Dom i seguenti nodi : 
+\vspace{5mm}
+   \begin{center}
+   \large
+   \begin{tabular}{C{6cm}|C{4cm}}
+            \textbf{Tipo} & \textbf{Elemento} \\
+            \hline
+            \rowcolor{lightgray} Booleans &
+            \begin{tabular}{c}
+                BooleanFilter \\ [5mm]
+                \hline
+                BooleanToggle \\  [5mm]
+            \end{tabular} \\ 
+            \hline
+            Sequencers &
+            \begin{tabular}{c}
+                BooleanSequencer \\[5mm]
+                \hline
+                IntegerSequencer \\ [5mm]
+            \end{tabular}  \\ 
+            \hline
+            \rowcolor{lightgray} Triggers & 
+            \begin{tabular}{c}
+                BooleanTrigger \\[5mm]
+                \hline
+                TimeTrigger \\ [5mm]
+            \end{tabular}  \\ 
+            \hline
+            PointingDeviceSensors & TouchSensor \\ [5mm]
+        
+        \end{tabular}
+    \end{center}
+    \vspace{5mm}
+
+    Questi elementi sono stati racchiusi all'interno di una libreria, denominita \textbf{extra-x3dom-nodes.js}, accessibile attraverso //TO-DO . 
+    C'é una precisazione da fare: siccome il team di sviluppo di x3dom.js ha iniziato ad implementare il TouchSensor, ma non completandolo, se avessi dovuto includerlo all'interno della mia libreria, sarebbe stato sovrascritto dalla loro implementazione. \\
+    Per cui ho scaricato i sorgenti di x3dom.js, incluso il mio TouchSensor e ricompilato la libreria. La versione da includere all'interno di un progretto sará la versione accessibile attraverso //TO-DO. \\ 
+\clearpage 
+
+\section{3DOORS Framework\texttrademark}
+    L'attiviá di estensione di x3dom.js é stata realizzata in vista di una possibile applicazione di tale formato da parte dell'azienda nel software proprietario 3DOORS.
+    La piattaforma 3DOORS Framework é lo strumento software progettato e svilupparo da synArea, ideato per creare applicazioni che fondono le tecnologie delle compure grafica con i nuovi ed innovativi paradigmi della comunicazione e dell'apprendimento visuale. \\
+    3DOORS Framework permette infatti il rapido sviluppo di coinvolgenti applicazioni 3D interattive per la comunicazione di prodotto, le presenzaioni, l'istruzione, la formazione e l'lintrattenimento. Diminuisce sensibilmente i costi ed i tempo di sviluppo ed é specificatamente progrettato per essere utilizzato anche da utenti CAD non esperti, artisti e media designer. 
+     \subsection{3DOORS Builder\texttrademark}
+        Tra gli strumenti del 3DOORS Framework é quello responsabile della creaizone del contenuto 3D vero e proprio. \\
+        Per inserire interattivitá, gestire eventi specifici e quant'altro vengono utilizzati i cosiddetti comportamenti (Behaviors), ossia una coppia sensore (Sensor) - azione (Action), responsabili della logica vera e propria dell'evento. \\ 
+        \vspace{4mm}
+        \begin{itemize}
+            \item \textbf{Sensor} \\
+                \vspace{1.5mm}
+                É l'unico responsabile dell'arrivazione di un evento. A seconda del tipo, un sensore puó essere collegato ad uno o piú oggetti della scena. Un sensore di distanza, ad esempio, necessita di due riferimenti ad oggetti in quanto fará scattare un evento quando la distanza tra i due oggetti che elgi monitora sará minore (o maggiore) di una soglia impostata dall'utente. 
+            \item \textbf{Action }\\ 
+                \vspace{1.5mm}
+                Definisce il tipo di evento scaturito in seguito all'attivazione di un sensore. Esisitono due tipi di azioni : i data action e i controller action. 
+                I data action sono degli eventi indipendenti, totalmente slegati dal contenuto specifico della scena. Esempi di data action sono il player audio, il player video, il visualizzatore PDF etc. I controller, invece, sono eventi che dipendono dallo specifico contenuto della scena. Tra i controller vi sono infatti : \\
+                \begin{itemize}
+                    \item controller di posa: responsabile dell'animazione di un oggetto della scena;
+                    \item controller di materiale: grazie al quale si puó modificare colore, lucentezza, trasparenza di un oggetto
+                    \item visibilitá: con il quale si fa apparire/scomparire un oggetto dalla scena, e cosí via.
+                \end{itemize}
+            \item \textbf{Behavior} \\
+                \vspace{1.5mm}
+                Accoppia un determinato sensore ad una o piú azioni. Si tratta del vero artefice della logica della scena, ovvero: in seguito all'attivazione di questo sensore si dá il via alle azion associate.\\
+                Ad esempio, utilizzando un comportamento é possibile far partite la riproduzoine di un'animazione e di un suono (contemporaneamente) in seguito al click di un determinato oggetto. 
+        \end{itemize}
+        \clearpage 
+        \subsection{Exporter X3D} 
+        3DOORS Framework\texttrademark possiede attualmente un exporter in X3D, ossia un modulo capace di esportare la scena realizzata attraverso il Builder. \\
+        Un pregio di questo formato é sicuramente la facile maneggiabilitá da parte di un esportatore nella fase di conversione, poiché essendo un linguaggio di markup é di facile interpretazione e le logiche implementabili sono limitate. La sua pragmaticitá viene meno nel punto di vista dell'utente, il quale dovrá installare sul proprio browser plugin di terze parti o addirittura browser specifici per l'interpretazione di un file di questo tipo. \\
+        Per questo motivo il formato X3D é di scarso utilizzo e quindi l'esportatore, costruito per favorire la fruibilitá dei contenuti realizzati con 3DOORS, perde di significato. 
+        Dunque la mia attivitá si é focalizzata sul presentare una soluzione a tale problema, ossia una possibilitá di esportare una scena in formato xhtml o html5 con l'impiego del framework \textbf{x3dom.js}. \\
+        Dapprima si é pensato a realizzare un convertitore tra X3D e X3DOM, ma si sono verificati i seguenti problemi: 
+        \begin{itemize}
+            \item la compatibilitá tra i due formati é completa al 60\%; 
+            \item alcuni comportamenti di 3DOORS vengono esportati come SCRIPT, ossia nodi custom di X3D, anch'essi non supportati in x3dom. 
+        \end{itemize}
+        Per risolvere entrambi i problemi ho sfruttato la possibilitá offerta da x3dom.js di estendere le componenti disponibili, implementandone delle nuove,  in modo da permettere l'utilizzo del codice X3D generato dall'esportatore.  //
+        ....  !! qualcosa in piú su converter.py 
+        \clearpage 
+
+\section{Estendere x3dom}
+
+Come giá sottolineato x3dom.js permette l'estensione dei nodi X3D utilizzabili all'interno di una scena.\\ 
+Per registrare il proprio nodo all'interno del sistema X3DOM, bisogna creare l'equivalente di una \textit{classe} che eredita proprietá da una \textit{superclasse}. 
+Javascript stesso non implementa un modello \textit{object oriented}, ma fornisce un cosiddetto \textit{prototype model}. 
+Un modello di questo tipo, si puó implementare un sistema basato sulle classi piú limitato. Questo é esattamente ció che fa X3DOM. 
+\newline          
+Per ogni nodo che si vuole implementare bisogna invocare la funzione :\\ 
+\vspace{2mm}
+\textit{x3dom.registerNodeType("YourNodeName", "GroupName", definitionObj)};
+\vspace{2mm}
+\newline
+
+Questa funzione registra un nuovo nodo e permette l'implementazione di questa classe. Il primo parametro é anche il nome del tag XML per cui si sta scrivendo il codice. Il terzo parametro é il valore di ritorno della chiamata alla funizione X3DOM :\\ 
+\vspace{2mm}
+\textit{defineClass(superclassObj, contructorObj, implementationObj)};
+\vspace{2mm}
+\newline 
+Questa funzione é approssimativamente l'equivalente della definizione della creazione di una classe in un liguaggio con un sistema orientato agli oggetti. \\ 
+
+\begin{center}\textbf{Hello World} \end{center}
+
+Supponiamo si voglia implementare un nodo personalizzato che stampi le parole "Hello World" sulla console. Come prima cosa si decide come l'XML dovrebbe presentarsi. In questo caso, si vuole semplicemente un altro tag XML che si presenti cosí : \\
+
+\vspace{2mm}
+\begin{lstlisting}[language=html] 
+<x3d>
+    <scene>
+    <hello></hello>   <-- il nuovo tag
+    </scene>
+</x3d>
+\end{lstlisting}
+\vspace{2mm}
+
+Fino a questo punto non esiste nessun nodo \textit{Hello} nel sistema X3DOM per cui nulla accadrá nel browser in cui si vorrá lanciare questo X3D. 
+Il tag <hello> non é riconosciuto e pertanto ignorato da X3DOM. Per fare in modo che <hello> venga interpretato é necessario registrare un nuovo nodo e realizzare un implementazione per tale nodo. 
+Per fare questo si dovranno utilizzare le due funzioni descritte sopra:\\
+
+\vspace{2mm}
+\small\lstinputlisting
+{res/hello.js}
+\vspace{2mm}
+
+Per prima cosa il nodo \textit{hello} é registrato con X3DOM, appartiene al nodo \textit{core}. Si crea poi un'implementazione dell'oggetto \textit{x3dom.nodeTypes.X3DNode}, la superclasse. Si definisce inoltre un costruttore per il nodo in forma di funzione che si passa alla \textit{defineClass()}. L'ultimo parametro consiste in un oggetto letterale contentente definizioni di funzioni per le API del nodo. In questo esempio é stata implementata una funzione chiamata \textit{nodeChanged} che verrá chiamata da X3DOM ogni volta che ci sará un cambiamento sul nodo nel DOM. Sará inoltre chiamata quando il nodo verrá incontrato la prima volta.  \\
+La funzione \textit{nodeChanged} non é l'unica funzione che si puó passare durante l'implementazione. Per esempio, il metodo \textit{fieldChanged} viene chiamato quando un attributo nel DOM cambia, e si puó implementare qualsiasi altra funzione si voglia. \\
+
+    \subsection{3DoorsSensors}
+
+    Sfruttando questa caratteristica di X3DOM mi é stato possibile realizzare come tag XML i sensori utilizzati da 3DOORS Builder. Ossia: \\
+    \begin{center}
+        \begin{tabular}{c | p{8cm}}
+            \rowcolor{lightgray} Click & Il sensore di click ha il compito di intercettare un evento di click sull'elemento o sul gruppo di elementi associati. \\
+            \hline
+            Delay & Il sensore di delay fa partire un'azione dopo un certo tempo settato dall'utente. \\
+            \hline
+            \rowcolor{lightgray} Distance & Il sensore di distanza calcola la distanza che intercorre tra i due elementi associati ad esso. Qualora la distanza sia minore ( o maggiore in base al valore booleano dell'attributo \textit{negated}) il sensore dará luogo ad un'azione. \\
+            \hline
+            OR e AND & Corrispondono ai loro valori booleani. Collegando due sensori ad un OR o un AND il valore d'uscita rispetterá la logica booleana associata al sensore.  \\
+        \end{tabular}
+    \end{center}
+
+    I nodi in X3DOM realizzati sono i seguenti: 
+    
     \begin{itemize}
-        \item Booleans :
-            \begin{itemize}
-                \item BooleanFilter
-                \item BooleanToggle
-            \end{itemize}
-        \item Sequencers
-            \begin{itemize}
-                \item BooleanSequencer
-                \item IntegerSequencer 
-            \end{itemize}
-        \item Triggers
-            \begin{itemize}
-                \item BooleanTrigger
-                \item TimeTrigger
-            \end{itemize}
-        \item TouchSensor
+        \item \textbf{Click}: Per il sensore di click é stato semplicemente associato il TouchSensor di X3D, che non essendo stato ancora implementato, ho dovuto realizzarlo. \\ 
+        \item \textbf{Delay}: \\
+            \begin{lstlisting}[language=html]
+<DelaySensor DEF="nare" delay="<delaytime>" additionalDelay="<addiotionalDelay"/> 
+            \end{lstlisting}
+        \item \textbf{Distance}: \\
+            \begin{lstlisting}[language=html]
+<DistanceSensor DEF="name" distance="<distance>" negated="<negatedValue>"
+ element1Coordinates="<coordinates>" element2Coordinates="<coordinates>" />
+            \end{lstlisting}
+        \item \textbf{AND/OR} : \\ 
+            \begin{lstlisting}[language=html]
+<BooleanAnd/BooleanOr DEF="name" firstValue="<value>" secondValue="<value>" /> 
+            \end{lstlisting}
     \end{itemize}
-\end{flushleft}
+
+\section{X3DOORS}
 \end{document}
