@@ -12,53 +12,53 @@ import util.X3DomExportable;
 import x3doors.DocInstance;
 import x3doors.actions.sensors.Sensor;
 
-public class Behaviour implements  X3DomExportable {
-    /* An array list containing the current scene declared behaviours */
-    private static ArrayList<Behaviour> register = new ArrayList<Behaviour>();
+public class Behavior implements  X3DomExportable {
+    /* An array list containing the current scene declared Behaviors */
+    private static ArrayList<Behavior> register = new ArrayList<Behavior>();
 
     /* This counter is used to assign the data name automatically when it is not specified */
     private static int counter = 0;
 
-    /* The behaviour name */
+    /* The Behavior name */
     private String name;
-    /* The behaviour sensor */
+    /* The Behavior sensor */
     private Sensor sensor;
-    /* The behaviour action, can be either a controller or a data */
+    /* The Behavior action, can be either a controller or a data */
     private Actionable action;
 
-    /** Stores a behaviour in the behaviour register.
+    /** Stores a Behavior in the behavior register.
      * 
-     * @param The behaviour to be stored
+     * @param The Behavior to be stored
      */
-    public static void store(Behaviour behaviour) {
-        register.add(behaviour);
+    public static void store(Behavior behavior) {
+        register.add(behavior);
     }
 
-    /** Returns the behaviour with the given register index.
+    /** Returns the Behavior with the given register index.
      * 
-     * @param index The behaviour register index
-     * @return The behaviour
+     * @param index The Behavior register index
+     * @return The Behavior
      */
-    public static Behaviour get(int index) {
+    public static Behavior get(int index) {
         return register.get(index);
     }
 
-    /** @return The behaviour register size */
+    /** @return The Behavior register size */
     public static int registerSize() {
         return register.size();
     }
 
-    /** Creates a behaviour with the given properties.
+    /** Creates a Behavior with the given properties.
      * 
      * @param name The name
      * @param sensor The sensor
      * @param action The action
      */
-    public Behaviour(String name, Sensor sensor, Actionable action) {
-        this.name = (name == null || name.equals("")) ? ("Behaviour_" + counter++) : name;
+    public Behavior(String name, Sensor sensor, Actionable action) {
+        this.name = (name == null || name.equals("")) ? ("Behavior_" + counter++) : name;
         this.sensor = sensor;
         this.action = action;
-        Behaviour.store(this);
+        Behavior.store(this);
     }
 
     /** @return The sensor */
@@ -77,8 +77,8 @@ public class Behaviour implements  X3DomExportable {
         String actionName = action.getName(); 
         MyNodeList wrapper = new MyNodeList(); 
         Document doc = DocInstance.getInstance();
-        Element behaviourGroup = doc.createElement("Group"); 
-        behaviourGroup.setAttribute("DEF", this.name); 
+        Element BehaviorGroup = doc.createElement("Group"); 
+        BehaviorGroup.setAttribute("DEF", this.name); 
         Element group = doc.createElement("Group"); 
         group.setAttribute("DEF", sensorName + "_Group"); 
         Element route = doc.createElement("ROUTE"); 
@@ -91,9 +91,9 @@ public class Behaviour implements  X3DomExportable {
 
         group.appendChild(route);  
         for (Node n : action.toX3Dom().getChildren())
-            behaviourGroup.appendChild((Element)n);  
-        behaviourGroup.appendChild(group); 
-        wrapper.appendChild(behaviourGroup); 
+            BehaviorGroup.appendChild((Element)n);  
+        BehaviorGroup.appendChild(group); 
+        wrapper.appendChild(BehaviorGroup); 
         return wrapper;  
     }
 }

@@ -5,7 +5,6 @@ import org.w3c.dom.Element;
 
 import util.Metadata;
 import util.MyNodeList;
-import util.X3DExportable;
 import util.X3DomExportable;
 import x3doors.DocInstance;
 import x3doors.nodes.Camera;

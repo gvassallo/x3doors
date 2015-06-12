@@ -8,7 +8,7 @@ import util.MyNodeList;
 import x3doors.DocInstance;
 import x3doors.nodes.Camera;
 import x3doors.nodes.SceneObject;
-import x3doors.properties.SceneProperties;
+
 
 public class Distance extends Sensor {
     /* The distance between the two elements */
@@ -17,8 +17,8 @@ public class Distance extends Sensor {
     private SceneObject element1;
     /* The second element */
     private SceneObject element2;
-    /* true if the first element is a camera, need to check this for the X3D exporting process */
-    private boolean element1IsCamera;
+ 
+ 
     private Element script; 
     /** Creates a distance click sensor with the given properties.
      * 

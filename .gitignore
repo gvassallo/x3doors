@@ -1,3 +1,4 @@
+*.log
 .DS_Store
 bin
 *.class 
@@ -9,3 +10,5 @@ JavascriptSensors
 .idea 
 X3Doors.iml
 workbench.xmi
+src/scenes
+doc/

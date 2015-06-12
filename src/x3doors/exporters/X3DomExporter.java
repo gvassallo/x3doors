@@ -17,7 +17,7 @@ import org.w3c.dom.Node;
 
 import util.*; 
 import x3doors.DocInstance;
-import x3doors.actions.Behaviour;
+import x3doors.actions.Behavior;
 import x3doors.actions.sensors.*;
 import x3doors.nodes.*; 
 import x3doors.properties.*; 
@@ -174,8 +174,14 @@ public class X3DomExporter {
             if (sceneObject instanceof Root){
                  MyNodeList list = new MyNodeList(); 
                  list = appendChildren(sceneObject, list); 
+                 for(int i = 0; i<list.getLength(); i++)
+                	 scale.appendChild(list.get(i));
+                 transform_2.appendChild(scale);
+                 transform_1.appendChild(transform_2);
+                 wrapper.appendChild(transform_1);
+                 return wrapper; 
             }
-            if (isMesh)
+            else if (isMesh)
                 scale.appendChild(getMesh(sceneObject)); 
             else if(!isCamera || (isCamera && (sceneObject == SceneProperties.getActiveCamera()))){
                 MyNodeList list = sceneObject.toX3Dom();  
@@ -231,10 +237,10 @@ public class X3DomExporter {
 
     private static MyNodeList getBehaviors(){ 
         MyNodeList behaviors = new MyNodeList(); 
-        Behaviour behavior = null; 
+        Behavior behavior = null; 
         Sensor sensor = null; 
-        for (int i = 0; i < Behaviour.registerSize(); i++){
-            behavior = Behaviour.get(i); 
+        for (int i = 0; i < Behavior.registerSize(); i++){
+            behavior = Behavior.get(i); 
             sensor = behavior.getSensor(); 
             if (sensor instanceof Click ) 
                 addClickSensor((Click)sensor);

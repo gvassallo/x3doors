@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
-import org.w3c.dom.CDATASection;
+
 import org.w3c.dom.Element;
 
 import x3doors.DocInstance;
