@@ -60,7 +60,7 @@ public abstract class SceneObject implements X3DomExportable {
         return register.size();
     }
     public MyNodeList toX3Dom(){
-         return (new MyNodeList()); 
+        return (new MyNodeList()); 
     }
 
     /** Creates a scene object with the given properties.
@@ -133,13 +133,13 @@ public abstract class SceneObject implements X3DomExportable {
     }
 
     public ArrayList<SceneObject> getChildren() {
-		return children;
-	}
+        return children;
+    }
 
-	public void setChildren(ArrayList<SceneObject> children) {
-		this.children = children;
-	}
-	public class Transform  {
+    public void setChildren(ArrayList<SceneObject> children) {
+        this.children = children;
+    }
+    public class Transform  {
         /** The position of the transform in world space */
         public Vec3 worldTranslationCoordinates;
         /** The rotation of the transform in world space */

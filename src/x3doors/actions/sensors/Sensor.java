@@ -14,7 +14,7 @@ public abstract class Sensor implements  X3DomExportable {
     protected boolean repeatable;
     protected String type;
 
-     /* Defines the sensor type. */
+    /* Defines the sensor type. */
     protected enum Type {
         CLICK,
         DELAY,

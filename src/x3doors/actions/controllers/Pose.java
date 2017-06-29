@@ -177,7 +177,7 @@ public class Pose extends Controller {
         getTimeElement(cycleInterval, wrapper); 
         getTranslationRoutes(wrapper);  
         if (isLight)
-             getDirectionRoutes(wrapper); 
+            getDirectionRoutes(wrapper); 
         else 
             getOrientationRoutes(wrapper); 
         if(!repeat.equals("Clamp")){
@@ -192,10 +192,10 @@ public class Pose extends Controller {
     }
 
     private double setKeyValues(double cycleInterval){
-    double offset = times.get(0); 
-    boolean attachedSceneObjectIsLight = SceneObject.get(attachedTo) instanceof Light;
-    int timesSize = times.size();
-    double range = times.get(timesSize - 1) - offset;
+        double offset = times.get(0); 
+        boolean attachedSceneObjectIsLight = SceneObject.get(attachedTo) instanceof Light;
+        int timesSize = times.size();
+        double range = times.get(timesSize - 1) - offset;
         switch (repeat) {
             case "Clamp":
                 keyX3DString += Utils.doubleArray2StringFormat(Utils.normalizeDoubleArray(Utils.doubleList2DoubleArray(times), cycleInterval), ' ', false);
@@ -245,7 +245,7 @@ public class Pose extends Controller {
                 }
                 orientationKV += Utils.stringArray2String(Utils.mirror(Utils.arrayList2X3DStringArray(rotations)), ' ', false);
         }
-    
+
         return cycleInterval;     
     }
     private void getTimeElement(double cycleInterval, MyNodeList wrapper){ 
@@ -265,7 +265,7 @@ public class Pose extends Controller {
         wrapper.appendChild(timeTrigger) ; 
         wrapper.appendChild(timeSensor); 
         wrapper.appendChild(route1) ; 
-        
+
     }
     private void getTranslationRoutes(MyNodeList wrapper){
         Document doc= DocInstance.getInstance(); 

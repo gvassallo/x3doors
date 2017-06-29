@@ -6,23 +6,23 @@ import org.w3c.dom.Document;
 
 public class DocInstance {
 
-     private static Document instance; 
-     
-     private DocInstance(){ 
-        
-     }
+    private static Document instance; 
 
-     public static Document getInstance() { 
-         if (instance == null) {
+    private DocInstance(){ 
+
+    }
+
+    public static Document getInstance() { 
+        if (instance == null) {
             try {
-        	 DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-             DocumentBuilder builder = dbf.newDocumentBuilder();
-             instance = builder.newDocument(); 
+                DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+                DocumentBuilder builder = dbf.newDocumentBuilder();
+                instance = builder.newDocument(); 
             }
             catch (Exception e){
-            	e.printStackTrace(); 
+                e.printStackTrace(); 
             }
-         }
-         return instance ;
-     }
+        }
+        return instance ;
+    }
 }

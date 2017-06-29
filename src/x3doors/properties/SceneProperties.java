@@ -29,7 +29,7 @@ public class SceneProperties implements  X3DomExportable {
     /* The scene active camera */
     private Camera activeCamera;
     private boolean debug = false; 
-    
+
     public static  void  setDebugMode(boolean value){ 
         SceneProperties.getInstance().debug=value; 
     }
@@ -142,7 +142,7 @@ public class SceneProperties implements  X3DomExportable {
         return this.background; 
     }
     public  Skybox getSkyBox(){
-         return this.skybox; 
+        return this.skybox; 
     }
 
     public MyNodeList toX3Dom(){

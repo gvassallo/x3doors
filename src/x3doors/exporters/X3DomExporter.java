@@ -75,10 +75,10 @@ public class X3DomExporter {
         /* two functions to active the slide menu  */
         String funcName = "classie(); nav();"; 
 
-        /* if there are some distance sensor, with one of the two element that is a camera,  
-            you have to attach to the file a script, one for each sensor,
-            to get the current camera position, using the runtime api of x3dom  
-            for each sensor create a function with his name and finally append functions after the x3d tag */
+        /* if there are some distance sensors, with one of the two element that is a camera,  
+           you have to attach to the file a script, one for each sensor,
+           to get the current camera position, using the runtime api of x3dom  
+           for each sensor create a function with his name and finally append functions after the x3d tag */
 
         if(scripts.getLength()!=0){
             Element script = doc.createElement("script");
@@ -172,14 +172,14 @@ public class X3DomExporter {
             Element scale = doc.createElement("Transform"); 
             scale.setAttribute("scale", Utils.double2StringFormat(sceneObject.transform.localScaleFactor.x) + " " + Utils.double2StringFormat(sceneObject.transform.localScaleFactor.y) + " " + Utils.double2StringFormat(sceneObject.transform.localScaleFactor.z)); 
             if (sceneObject instanceof Root){
-                 MyNodeList list = new MyNodeList(); 
-                 list = appendChildren(sceneObject, list); 
-                 for(int i = 0; i<list.getLength(); i++)
-                	 scale.appendChild(list.get(i));
-                 transform_2.appendChild(scale);
-                 transform_1.appendChild(transform_2);
-                 wrapper.appendChild(transform_1);
-                 return wrapper; 
+                MyNodeList list = new MyNodeList(); 
+                list = appendChildren(sceneObject, list); 
+                for(int i = 0; i<list.getLength(); i++)
+                    scale.appendChild(list.get(i));
+                transform_2.appendChild(scale);
+                transform_1.appendChild(transform_2);
+                wrapper.appendChild(transform_1);
+                return wrapper; 
             }
             else if (isMesh)
                 scale.appendChild(getMesh(sceneObject)); 

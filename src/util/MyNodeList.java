@@ -12,11 +12,11 @@ public class MyNodeList {
     }
     public int getLength()
     {
-         return nodeList.size(); 
+        return nodeList.size(); 
     }
     public MyNodeList appendChild(Node node){
-         nodeList.add(node); 
-         return this; 
+        nodeList.add(node); 
+        return this; 
     }
     public Element get (int i){
         if (i >= nodeList.size() )
@@ -24,6 +24,6 @@ public class MyNodeList {
         return (Element) nodeList.get(i); 
     }
     public ArrayList<Node> getChildren(){
-         return nodeList;
+        return nodeList;
     }
 }

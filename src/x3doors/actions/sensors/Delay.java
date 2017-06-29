@@ -10,25 +10,25 @@ import x3doors.DocInstance;
 
 public class Delay extends Sensor {
 
-	/* The delay time in seconds */
-	private double delayTime;
-	
-	// negated and repeatable attributes have no sense for this kind of sensor
-	
-	/** Creates a delay sensor with the given properties.
-	 * 
-	 * @param name The name
-	 * @param negated If true then the related sensor event is triggered on the complementary of its original logical condition
-	 * @param repeatable If true then this sensor can trigger its related event more than once
-	 * @param delayTime The delay time in seconds.
-	 */
-	public Delay(String name, boolean negated, boolean repeatable, double delayTime) {
-		super(name, negated, repeatable, Type.DELAY);
-		this.delayTime = delayTime;
-	}
-	
-	public MyNodeList toX3Dom() {
-		MyNodeList wrapper = new MyNodeList(); 
+    /* The delay time in seconds */
+    private double delayTime;
+
+    // negated and repeatable attributes have no sense for this kind of sensor
+
+    /** Creates a delay sensor with the given properties.
+     * 
+     * @param name The name
+     * @param negated If true then the related sensor event is triggered on the complementary of its original logical condition
+     * @param repeatable If true then this sensor can trigger its related event more than once
+     * @param delayTime The delay time in seconds.
+     */
+    public Delay(String name, boolean negated, boolean repeatable, double delayTime) {
+        super(name, negated, repeatable, Type.DELAY);
+        this.delayTime = delayTime;
+    }
+
+    public MyNodeList toX3Dom() {
+        MyNodeList wrapper = new MyNodeList(); 
         Document doc = DocInstance.getInstance(); 
         Element filter = 	doc.createElement("BooleanFilter"); 
         filter.setAttribute("DEF", name+"_Filter"); 
@@ -44,6 +44,6 @@ public class Delay extends Sensor {
         wrapper.appendChild(delaySensor); 
         wrapper.appendChild(route1); 
         return wrapper;
-	}
+    }
 
 }

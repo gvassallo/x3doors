@@ -53,8 +53,8 @@ public class Material implements  X3DomExportable {
     }
 
     public MyNodeList toX3Dom()  {
-   
-    	Document doc = DocInstance.getInstance();           
+
+        Document doc = DocInstance.getInstance();           
         Element  material = doc.createElement("Material"); 
         double ambientIntensity = ambient.r == ambient.g && ambient.g == ambient.b ? Utils.normalizeDouble(ambient.r, 255.0) : 0.2;
         material.setAttribute("transparency", Utils.double2StringFormat(1 - alpha) );
@@ -66,7 +66,7 @@ public class Material implements  X3DomExportable {
         MyNodeList mat = new MyNodeList(); 
         mat.appendChild(material);
         return mat; 
-       }
+    }
 }
-    
+
 

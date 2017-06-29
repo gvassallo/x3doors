@@ -17,8 +17,8 @@ public class Distance extends Sensor {
     private SceneObject element1;
     /* The second element */
     private SceneObject element2;
- 
- 
+
+
     private Element script; 
     /** Creates a distance click sensor with the given properties.
      * 
@@ -74,9 +74,9 @@ public class Distance extends Sensor {
         route3.setAttribute("toNode", name + "_Filter" ); 
         route3.setAttribute("toField", "set_boolean"); 
         wrapper.appendChild(filter)
-               .appendChild(distanceSensor);
+            .appendChild(distanceSensor);
         if (!isCamera1)
-             wrapper.appendChild(route1);
+            wrapper.appendChild(route1);
         if(!isCamera2)
             wrapper.appendChild(route2);
         wrapper.appendChild(route3);
@@ -95,17 +95,17 @@ public class Distance extends Sensor {
             "var vp=document.getElementById(\"viewpoint\");\n" +
             "vp.addEventListener(\"viewpointChanged\", " + name + "Handler);\n"+
             "}\n"+
-        "function "+ name +"Handler(evt){\n"+
-        /* "   console.log(evt.position);\n"+ */
-        "   var dist = document.getElementById(\""+ name +"\"); \n"+
-        "   dist.setFieldValue(\""+ coordinates + "\", evt.position); }\n";
+            "function "+ name +"Handler(evt){\n"+
+            /* "   console.log(evt.position);\n"+ */
+            "   var dist = document.getElementById(\""+ name +"\"); \n"+
+            "   dist.setFieldValue(\""+ coordinates + "\", evt.position); }\n";
         script.setTextContent(scriptText); 
         return this.script; 
-   }
-   public boolean hasCameraElement(){
+    }
+    public boolean hasCameraElement(){
         if (element1 instanceof Camera || element2 instanceof Camera )
             return true;
         return false ; 
-   }
+    }
 
 }

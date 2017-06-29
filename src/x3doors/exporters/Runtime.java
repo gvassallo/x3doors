@@ -10,7 +10,7 @@ import org.w3c.dom.Element;
 import x3doors.DocInstance;
 
 public class Runtime { 
-        
+
     public static Element getRuntimeScript(){
         String path = "res/scripts.js";
         Element script = DocInstance.getInstance().createElement("script"); 
@@ -38,8 +38,8 @@ public class Runtime {
             menu.close();
             return menuString; 
         }catch(IOException e){
-             System.out.println(e.getMessage());
-             return null; 
+            System.out.println(e.getMessage());
+            return null; 
         }
     }
     public static void appendMenu(Element body) {

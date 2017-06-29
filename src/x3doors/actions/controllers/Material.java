@@ -27,14 +27,14 @@ public class Material extends Controller {
     private ArrayList<RGBColor> specular;
     /* A list containing the key frames transparencies */
     private ArrayList<Double> transparencies;
-    
+
     private String transparencyScalarInterpolatorKeyValueX3DString = "";
     private String diffuseColorInterpolatorKeyValueX3DString = "";
     private String emissiveColorInterpolatorKeyValueX3DString = "";
     private String shininessScalarInterpolatorKeyValueX3DString = "";
     private String specularColorInterpolatorKeyValueX3DString = "";
     private String keyX3DString = "";
-    
+
     /** Creates a controller with the given properties.
      * 
      * @param name The name
@@ -135,8 +135,8 @@ public class Material extends Controller {
         /* shininessScalarInterpolatorKeyValueX3DString += "\""; */
         /* transparencyScalarInterpolatorKeyValueX3DString += "\""; */
         return cycleInterval;
-        }
-        
+    }
+
     public MyNodeList toX3Dom(){
         double cycleInterval = this.setKeyValues();
         MyNodeList wrapper = new MyNodeList(); 
@@ -157,7 +157,7 @@ public class Material extends Controller {
         return wrapper; 
     }
     private void getTimeElement(MyNodeList wrapper, double cycleInterval){
-         Document doc = DocInstance.getInstance();
+        Document doc = DocInstance.getInstance();
         Element timeTrigger = doc.createElement("TimeTrigger"); 
         timeTrigger.setAttribute("DEF", name + "_Trigger"); 
         Element timeSensor = doc.createElement("TimeSensor"); 
@@ -177,40 +177,40 @@ public class Material extends Controller {
 
 
     private void getColorInterpolator(MyNodeList wrapper, String property, String keyValue){
-            Document doc = DocInstance.getInstance(); 
-            Element colorInterpolator = doc.createElement("ColorInterpolator"); 
-            colorInterpolator.setAttribute("DEF", name +"_" + property); 
-            colorInterpolator.setAttribute("key",keyX3DString ); 
-            colorInterpolator.setAttribute("keyValue", keyValue); 
-            Element route1 = doc.createElement("ROUTE");
-            route1.setAttribute("fromNode", "Clock_" + name);
-            route1.setAttribute("fromField", "fraction_changed");
-            route1.setAttribute("toNode", name + "_" + property);
-            route1.setAttribute("toField", "set_fraction");
-            Element route2 = doc.createElement("ROUTE");
-            route2.setAttribute("fromNode", name + "_" + property);
-            route2.setAttribute("fromField", "value_changed");
-            route2.setAttribute("toNode", SceneObject.get(attachedTo).getName() + "_Material");
-            route2.setAttribute("toField", "set_" + property );
-            wrapper.appendChild(colorInterpolator).appendChild(route1).appendChild(route2); 
+        Document doc = DocInstance.getInstance(); 
+        Element colorInterpolator = doc.createElement("ColorInterpolator"); 
+        colorInterpolator.setAttribute("DEF", name +"_" + property); 
+        colorInterpolator.setAttribute("key",keyX3DString ); 
+        colorInterpolator.setAttribute("keyValue", keyValue); 
+        Element route1 = doc.createElement("ROUTE");
+        route1.setAttribute("fromNode", "Clock_" + name);
+        route1.setAttribute("fromField", "fraction_changed");
+        route1.setAttribute("toNode", name + "_" + property);
+        route1.setAttribute("toField", "set_fraction");
+        Element route2 = doc.createElement("ROUTE");
+        route2.setAttribute("fromNode", name + "_" + property);
+        route2.setAttribute("fromField", "value_changed");
+        route2.setAttribute("toNode", SceneObject.get(attachedTo).getName() + "_Material");
+        route2.setAttribute("toField", "set_" + property );
+        wrapper.appendChild(colorInterpolator).appendChild(route1).appendChild(route2); 
     }
 
     private void getScalarInterpolator(MyNodeList wrapper, String property, String keyValue){
-            Document doc = DocInstance.getInstance(); 
-            Element scalarInterpolator = doc.createElement("ScalarInterpolator"); 
-            scalarInterpolator.setAttribute("DEF", name +"_" + property); 
-            scalarInterpolator.setAttribute("key", keyX3DString); 
-            scalarInterpolator.setAttribute("keyValue", keyValue); 
-            Element route1 = doc.createElement("ROUTE");
-            route1.setAttribute("fromNode", "Clock_" + name);
-            route1.setAttribute("fromField", "fraction_changed");
-            route1.setAttribute("toNode", name + "_" + property);
-            route1.setAttribute("toField", "set_fraction");
-            Element route2 = doc.createElement("ROUTE");
-            route2.setAttribute("fromNode", name + "_" + property);
-            route2.setAttribute("fromField", "value_changed");
-            route2.setAttribute("toNode",  SceneObject.get(attachedTo).getName()+ "_Material");
-            route2.setAttribute("toField",  "set_"+ property );
-            wrapper.appendChild(scalarInterpolator).appendChild(route1).appendChild(route2); 
+        Document doc = DocInstance.getInstance(); 
+        Element scalarInterpolator = doc.createElement("ScalarInterpolator"); 
+        scalarInterpolator.setAttribute("DEF", name +"_" + property); 
+        scalarInterpolator.setAttribute("key", keyX3DString); 
+        scalarInterpolator.setAttribute("keyValue", keyValue); 
+        Element route1 = doc.createElement("ROUTE");
+        route1.setAttribute("fromNode", "Clock_" + name);
+        route1.setAttribute("fromField", "fraction_changed");
+        route1.setAttribute("toNode", name + "_" + property);
+        route1.setAttribute("toField", "set_fraction");
+        Element route2 = doc.createElement("ROUTE");
+        route2.setAttribute("fromNode", name + "_" + property);
+        route2.setAttribute("fromField", "value_changed");
+        route2.setAttribute("toNode",  SceneObject.get(attachedTo).getName()+ "_Material");
+        route2.setAttribute("toField",  "set_"+ property );
+        wrapper.appendChild(scalarInterpolator).appendChild(route1).appendChild(route2); 
     }
 }

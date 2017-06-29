@@ -1,5 +1,5 @@
 package util;
 
 public interface Printable {
-	void print();
+    void print();
 }
